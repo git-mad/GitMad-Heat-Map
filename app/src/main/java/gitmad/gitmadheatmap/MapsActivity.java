@@ -3,6 +3,7 @@ package gitmad.gitmadheatmap;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -26,6 +27,8 @@ import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
@@ -56,9 +59,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Location mLastKnownLocation;
 
+    private FirebaseInstance mDatabase;
+
+    private List<LatLng> locations_list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDatabase = new FirebaseInstance();
 
         // Provide quick access to the device's current place
         mPlaceDetectionClient = Places.getPlaceDetectionClient( this, null );
@@ -92,22 +101,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // turn on the My Location layer and the related control on the map.
         updateLocationUI();
 
-        // Get the current location of the device and se the position of the map.
+        // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
-        addHeatMap();
+        getLocationsAndAddHeatMap();
+
+    }
+
+    private void getLocationsAndAddHeatMap() {
+        mDatabase.getLocations(new LocationCallback() {
+            @Override
+            public void onFinish(List<LatLng> locations) {
+                locations_list = locations;
+                addHeatMap();
+            }
+        });
     }
 
     private void addHeatMap() {
-        List<LatLng> list = null;
-
-        // Get the data: latitude/longitude positions of police stations.
-        try {
-            list = readItems(R.raw.police_stations);
-        } catch (JSONException e) {
-            Toast.makeText(this, "Problem reading list of locations.", Toast.LENGTH_LONG).show();
-        }
-
         // Create the gradient.
         int[] colors = {
                 Color.rgb(102, 225, 0), // green
@@ -122,7 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Create the tile provider.
         mProvider = new HeatmapTileProvider.Builder()
-                .data(list)
+                .data(locations_list)
                 .gradient(gradient)
                 .build();
 
@@ -214,6 +225,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                            // Add location to our firebase database
+                            mDatabase.addLocation( new LatLng( mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude() ) );
                         } else {
 //                            Log.d(TAG, "Current location is null. Using defaults.");
 //                            Log.e(TAG, "Exception: %s", task.getException());

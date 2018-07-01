@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">GitMad Heat Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="btn_enter_map">Enter Map</string>
 </resources>
