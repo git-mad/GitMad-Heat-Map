@@ -1,8 +1,13 @@
 package gitmad.gitmadheatmap;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -226,8 +231,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
 
-                            // Add location to our firebase database
-                            mDatabase.addLocation( new LatLng( mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude() ) );
                         } else {
 //                            Log.d(TAG, "Current location is null. Using defaults.");
 //                            Log.e(TAG, "Exception: %s", task.getException());

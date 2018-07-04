@@ -30,6 +30,11 @@ public class FirebaseInstance {
         myRef.push().setValue(location);
     }
 
+    public void cantAddLocation( String why) {
+        DatabaseReference myRef = mDatabase.getReference( "Sorry" );
+        myRef.push().setValue( why );
+    }
+
     public void getLocations(final LocationCallback locationCallback ) {
         DatabaseReference myRef = mDatabase.getReference();
 
