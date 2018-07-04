@@ -46,10 +46,7 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
 
             final Task locationResult = mFusedLocationProviderClient.getLastLocation();
 
-            int numCores = Runtime.getRuntime().availableProcessors();
-            ThreadPoolExecutor executor = new ThreadPoolExecutor(numCores * 2, numCores * 2, 15L, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
-
-            locationResult.addOnCompleteListener(executor, new OnCompleteListener() {
+            locationResult.addOnCompleteListener( new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
