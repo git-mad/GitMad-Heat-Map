@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">GitMad Heat Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="btn_enter_map">Enter Map</string>
+    <string name="btn_start_alarm">Start Alarm</string>
+    <string name="btn_stop_alarm">Stop Alarm</string>
+    <string name="txtvw_alarm_note">Note. If the alarm is on and you did not start it, then it was started when your phone was booted up.</string>
 </resources>
