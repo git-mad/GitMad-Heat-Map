@@ -96,6 +96,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getDeviceLocation();
 
         addHeatMap();
+
+
     }
 
     private void addHeatMap() {

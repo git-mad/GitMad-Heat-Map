@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">GitMad Heat Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="maps_api_key">AIzaSyDc-SwEzSvYCf-PHE2qccIi5W7kIBUPTjo</string>
+    <string name="title_activity_map_drawer">MapDrawer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
