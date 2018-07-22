@@ -12,12 +12,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button signIn;
+
     private TextView registerHere;
     private EditText passwordEntry;
     private EditText usernameEntry;
     private Button signInButton;
     private String username;
+    private String password;
     private FirebaseDatabase mDatabase;
 
 
@@ -33,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = usernameEntry.getText().toString();
-                String password = passwordEntry.getText().toString();
+                username = usernameEntry.getText().toString();
+                password = passwordEntry.getText().toString();
                 Intent intent = new Intent(view.getContext(), RegistrationActivity.class);
                 intent.putExtra("enteredUsername", username);
                 intent.putExtra("enteredPassword", password);
@@ -45,21 +46,20 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = usernameEntry.getText().toString();
-                String password = passwordEntry.getText().toString();
+                username = usernameEntry.getText().toString();
+                password = passwordEntry.getText().toString();
                 if (signInUser(username, password)) {
                     Intent intent = new Intent(view.getContext(), MapsActivity.class);
+                    startActivity(intent);
                 } else {
                     //Light the text boxes up and display a toast
                 }
             }
         });
-
-
     }
 
     public boolean signInUser(String username, String password) {
-        //Firebase stuff
+        //Sign in user with Firebase, and return if sign in was successful.
         return true;
     }
 }
