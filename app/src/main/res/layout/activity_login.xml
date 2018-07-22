@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/login"
+        android:text="@string/action_sign_in_short"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -21,6 +21,7 @@
 
     <TextView
         android:id="@+id/usernameText"
+        android:labelFor="@+id/usernameEntry"
         android:layout_width="69dp"
         android:layout_height="21dp"
         android:layout_marginEnd="8dp"
@@ -47,6 +48,7 @@
 
     <TextView
         android:id="@+id/passwordView"
+        android:labelFor="@+id/passwordEntry"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginBottom="276dp"

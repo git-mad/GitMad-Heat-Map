@@ -11,7 +11,6 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="first_name">First Name</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -23,7 +22,14 @@
     </string>
     <string name="username">Username</string>
     <string name="dont_have_account">Don\'t have an account? Register Here</string>
-    <string name="login">Log In</string>
     <string name="forgot_password">Forgot your password?</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+
+    <!-- Strings related to registration -->
+    <string name="create_account">Create a new account</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="register">Register</string>
 
 </resources>

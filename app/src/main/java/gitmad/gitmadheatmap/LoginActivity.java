@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = usernameEntry.getText().toString();
                 String password = passwordEntry.getText().toString();
-                Intent intent = new Intent(this, RegistrationActivity.class);
+                Intent intent = new Intent(view.getContext(), RegistrationActivity.class);
                 intent.putExtra("enteredUsername", username);
                 intent.putExtra("enteredPassword", password);
                 startActivity(intent);
@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean signInUser(String username, String password) {
-
+        //Firebase stuff
+        return true;
     }
 }
