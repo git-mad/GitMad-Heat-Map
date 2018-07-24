@@ -21,12 +21,12 @@
 
     <TextView
         android:id="@+id/usernameText"
-        android:labelFor="@+id/usernameEntry"
-        android:layout_width="69dp"
+        android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="156dp"
+        android:labelFor="@+id/usernameEntry"
         android:text="@string/username"
         app:layout_constraintEnd_toStartOf="@+id/usernameEntry"
         app:layout_constraintHorizontal_bias="0.266"
@@ -40,20 +40,23 @@
         android:layout_marginBottom="14dp"
         android:layout_marginTop="135dp"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/passwordEntry"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/usernameText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/passwordView"
-        android:labelFor="@+id/passwordEntry"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
-        android:layout_marginBottom="276dp"
+        android:layout_marginBottom="284dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:labelFor="@+id/passwordEntry"
         android:text="@string/prompt_password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/passwordEntry"
@@ -65,11 +68,13 @@
         android:layout_width="153dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/signIn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/passwordView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:layout_editor_absoluteY="201dp" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameEntry"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/signIn"

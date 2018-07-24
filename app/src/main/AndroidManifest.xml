@@ -39,7 +39,8 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".EnterActivity">
+        <activity android:name=".LoginActivity"
+                  android:label="LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,7 +57,7 @@
         </receiver>
         <receiver android:name=".AlarmCalledReceiver" />
 
-        <activity android:name=".LoginActivity" />
+        <!--<activity android:name=".LoginActivity" /> -->
         <activity
             android:name=".RegistrationActivity"
             android:label="@string/title_activity_registration"
