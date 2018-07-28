@@ -47,6 +47,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".EnterActivity" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:label="@string/title_activity_registration"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
 
         <receiver
             android:name=".AlarmOnBootReceiver"
@@ -56,12 +62,6 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".AlarmCalledReceiver" />
-
-        <!--<activity android:name=".LoginActivity" /> -->
-        <activity
-            android:name=".RegistrationActivity"
-            android:label="@string/title_activity_registration"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
