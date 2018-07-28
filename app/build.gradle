@@ -12,14 +12,14 @@ android {
     }
     buildTypes {
         debug {
-            //buildConfigField 'string', "maps_api_key", GitmadApp_ApiKey
-            //resValue 'string', "maps_api_key", GitmadApp_ApiKey
+            buildConfigField 'string', "maps_api_key", GitmadApp_ApiKey
+            resValue 'string', "maps_api_key", GitmadApp_ApiKey
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //buildConfigField 'string', "maps_api_key", GitmadApp_ApiKey
-            //resValue 'string', "maps_api_key", GitmadApp_ApiKey
+            buildConfigField 'string', "maps_api_key", GitmadApp_ApiKey
+            resValue 'string', "maps_api_key", GitmadApp_ApiKey
         }
     }
 }
