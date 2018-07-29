@@ -25,9 +25,9 @@ public class FirebaseInstance {
         mReference = mDatabase.getReference();
     }
 
-    public void addLocation( LatLng location ){
+    public void addLocation( LocationInformation locationInformation ){
         DatabaseReference myRef = mDatabase.getReference( "locations" );
-        myRef.push().setValue(location);
+        myRef.push().setValue( locationInformation );
     }
 
     public void cantAddLocation( String why) {
@@ -45,8 +45,8 @@ public class FirebaseInstance {
                 DataSnapshot locations = dataSnapshot.child( "locations" );
                 Iterable<DataSnapshot> location_values = locations.getChildren();
                 for ( DataSnapshot location : location_values ) {
-                    double latitude = location.child("latitude").getValue( Double.class );
-                    double longitude = location.child("longitude").getValue( Double.class );
+                    double latitude = location.child("location").child("latitude").getValue( Double.class );
+                    double longitude = location.child("location").child("longitude").getValue( Double.class );
                     location_list.add( new LatLng( latitude, longitude ) );
                 }
 

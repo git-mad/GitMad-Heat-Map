@@ -19,7 +19,7 @@ public class AlarmOnBootReceiver extends BroadcastReceiver {
             AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
             Intent alarmIntent = new Intent( context, AlarmCalledReceiver.class);
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast( context, 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT );
+            PendingIntent pendingIntent = PendingIntent.getBroadcast( context.getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT );
             alarmManager.setInexactRepeating( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 5000, R.integer.repeat_time, pendingIntent);
         }
     }
