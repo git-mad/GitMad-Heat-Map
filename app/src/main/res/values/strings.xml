@@ -5,4 +5,31 @@
     <string name="btn_start_alarm">Start Alarm</string>
     <string name="btn_stop_alarm">Stop Alarm</string>
     <string name="txtvw_alarm_note">Note. If the alarm is on and you did not start it, then it was started when your phone was booted up.</string>
+    <string name="maps_api_key">AIzaSyDc-SwEzSvYCf-PHE2qccIi5W7kIBUPTjo</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="username">Username</string>
+    <string name="dont_have_account">Don\'t have an account? Register Here</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="title_activity_registration">RegistrationActivity</string>
+
+    <!-- Strings related to registration -->
+    <string name="create_account">Create a new account</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="register">Register</string>
+
 </resources>
