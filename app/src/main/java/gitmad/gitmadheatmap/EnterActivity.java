@@ -47,7 +47,7 @@ public class EnterActivity extends AppCompatActivity {
         Intent alarmIntent = new Intent( this, AlarmCalledReceiver.class);
 
         pendingIntent = PendingIntent.getBroadcast( this.getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT );
-        alarmManager.setInexactRepeating( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 5000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+        alarmManager.setInexactRepeating( AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 5000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
 
         setAlarmButtons( false );
 
