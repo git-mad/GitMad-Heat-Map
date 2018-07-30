@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -15,26 +16,25 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView registerHere;
     private EditText passwordEntry;
-    private EditText usernameEntry;
+    private EditText emailEntry;
     private Button signInButton;
     private String username;
     private String password;
-    private FirebaseDatabase mDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        signInButton = findViewById(R.id.signIn);
-        passwordEntry = findViewById(R.id.passwordEntry);
-        usernameEntry = findViewById(R.id.usernameEntry);
-        registerHere = findViewById(R.id.registerText);
+
+        signInButton = findViewById(R.id.login_btn_signIn);
+        passwordEntry = findViewById(R.id.login_editText_password);
+        emailEntry = findViewById(R.id.login_editText_email);
+        registerHere = findViewById(R.id.login_txt_register_here);
 
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = usernameEntry.getText().toString();
+                username = emailEntry.getText().toString();
                 password = passwordEntry.getText().toString();
                 Intent intent = new Intent(view.getContext(), RegistrationActivity.class);
                 intent.putExtra("enteredUsername", username);
@@ -46,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = usernameEntry.getText().toString();
+                username = emailEntry.getText().toString();
+                Toast.makeText( LoginActivity.this , username, Toast.LENGTH_LONG ).show();
                 password = passwordEntry.getText().toString();
                 if (signInUser(username, password)) {
                     Intent intent = new Intent(view.getContext(), MapsActivity.class);

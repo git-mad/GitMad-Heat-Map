@@ -23,8 +23,8 @@ public class EnterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter);
 
-        startButton = findViewById( R.id.btn_start );
-        stopButton = findViewById( R.id.btn_stop );
+        startButton = findViewById( R.id.enter_btn_start_alarm);
+        stopButton = findViewById( R.id.enter_btn_stop_alarm);
 
         // This check is used to see if our alarm is already running.
         // It could be running from our receiver that called it once the phone booted up.
