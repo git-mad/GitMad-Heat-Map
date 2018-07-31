@@ -50,7 +50,8 @@
                     android:id="@+id/register_editText_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/first_name" />
+                    android:hint="@string/first_name"
+                    android:inputType="textCapSentences" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -70,7 +71,8 @@
                     android:id="@+id/register_editText_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/last_name" />
+                    android:hint="@string/last_name"
+                    android:inputType="textCapSentences" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -88,7 +90,8 @@
                     android:id="@+id/register_editText_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email" />
+                    android:hint="@string/prompt_email"
+                    android:inputType="textCapSentences" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
