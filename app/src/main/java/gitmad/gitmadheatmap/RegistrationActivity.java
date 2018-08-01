@@ -3,73 +3,133 @@ package gitmad.gitmadheatmap;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private Button registerButton;
-    private EditText usernameEntry;
     private EditText passwordEntry;
     private EditText emailEntry;
     private EditText fNameEntry;
     private EditText mNameEntry;
     private EditText lNameEntry;
-    private String username;
+    private String email;
     private String password;
-    private FirebaseDatabase mDatabase;
+
+    // Firebase
+    FirebaseAuth mAuth;
+    FirebaseDatabase mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        registerButton = findViewById(R.id.registerButton);
-        usernameEntry = findViewById(R.id.username_entry);
-        passwordEntry = findViewById(R.id.password_entry);
-        emailEntry = findViewById(R.id.email_entry);
-        fNameEntry = findViewById(R.id.first_name_entry);
-        mNameEntry = findViewById(R.id.middle_name_entry);
-        lNameEntry = findViewById(R.id.last_name_entry);
+        registerButton = findViewById(R.id.register_btn_create_account);
+        passwordEntry = findViewById(R.id.register_editText_password);
+        emailEntry = findViewById(R.id.register_editText_email);
+        fNameEntry = findViewById(R.id.register_editText_first_name);
+        lNameEntry = findViewById(R.id.register_editText_last_name);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra("enteredUsername");
+        email = intent.getStringExtra("enteredUsername");
         password = intent.getStringExtra("enteredPassword");
-        usernameEntry.setText(username);
+        emailEntry.setText(email);
         passwordEntry.setText(password);
+
+        // Firebase
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = usernameEntry.getText().toString();
-                password = passwordEntry.getText().toString();
-                String firstName = fNameEntry.getText().toString();
-                String lastName = lNameEntry.getText().toString();
-                String middleName = mNameEntry.getText().toString();
-                String email = emailEntry.getText().toString();
-
-                User newUser = new User(username, password, email, firstName,
-                                        middleName, lastName);
-                if (registerUser(newUser)) {
-                    Intent intent = new Intent(view.getContext(), EnterActivity.class);
-                    startActivity(intent);
-                } else {
-                    //There was an issue with registration. Display a toast.
-                }
+                registerUser();
             }
         });
     }
 
-    public boolean registerUser(User newUser) {
-        //Register the username, password, and stuff with the Firebase.
+    public void registerUser() {
+        final String email = emailEntry.getText().toString();
+        final String password = passwordEntry.getText().toString();
+        final String firstName = fNameEntry.getText().toString();
+        final String lastName = fNameEntry.getText().toString();
+
+        if( !areCredentialsValid() ) {
+            return;
+        }
+
+        FbAuth mAuth = new FbAuth();
+        mAuth.createNewUser( new User( firstName, lastName, email), password);
+    }
+
+    private boolean areCredentialsValid() {
+        // Store values at the time of the login attempt.
+        String email = emailEntry.getText().toString();
+        String password = passwordEntry.getText().toString();
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
+            notifyUserError( "INVALID_PASSWORD" );
+
+            return false;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            notifyUserError("EMPTY_EMAIL");
+
+            return false;
+        } else if (!isEmailValid(email)) {
+            notifyUserError("INVALID_EMAIL");
+
+            return false;
+        }
+
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+
         return true;
+    }
+
+    private void notifyUserError( String error ) {
+        switch( error) {
+            case "INVALID_PASSWORD":
+                Toast.makeText( RegistrationActivity.this, R.string.reg_invalid_password, Toast.LENGTH_LONG ).show();
+                break;
+            case "EMPTY_EMAIL":
+                Toast.makeText( RegistrationActivity.this, R.string.reg_invalid_email, Toast.LENGTH_LONG ).show();
+                break;
+            case "INVALID_EMAIL":
+                Toast.makeText( RegistrationActivity.this, R.string.reg_empty_email, Toast.LENGTH_LONG ).show();
+                break;
+        }
+    }
+
+    private boolean isPasswordValid( String password ) {
+        return password.length() > 5;
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
     }
 
 }

@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Location mLastKnownLocation;
 
-    private FirebaseInstance mDatabase;
+    private FbDatabase mDatabase;
 
     private List<LatLng> locations_list;
 
@@ -72,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDatabase = new FirebaseInstance();
+        mDatabase = new FbDatabase();
 
         // Provide quick access to the device's current place
         mPlaceDetectionClient = Places.getPlaceDetectionClient( this, null );

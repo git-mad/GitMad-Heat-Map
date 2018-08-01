@@ -31,4 +31,14 @@
     <string name="last_name">Last Name</string>
     <string name="register">Register</string>
 
+    <!-- Strings related to FirebaseAuth Exceptions -->
+    <string name="auth_user_not_found">That email is not associated to an account</string>
+    <string name="auth_password_error">The login credentials do not match</string>
+    <string name="auth_email_in_use">That email is already in use</string>
+    <string name="auth_invalid_email">Please enter a valid email</string>
+
+    <!-- Strings related to Registration Exceptions -->
+    <string name="reg_invalid_email">There must be an "@" sign in your email</string>
+    <string name="reg_invalid_password">Passwords must at least be 6 characters in length</string>
+    <string name="reg_empty_email">Please enter an email</string>
 </resources>
