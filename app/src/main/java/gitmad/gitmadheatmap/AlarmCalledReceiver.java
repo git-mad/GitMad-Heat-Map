@@ -54,10 +54,10 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
                         Location mLastKnownLocation;
                         mLastKnownLocation = (Location) task.getResult();
                         LatLng mCoordinates = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                        FirebaseInstance mDatabase = new FirebaseInstance();
+                        FbDatabase mDatabase = new FbDatabase();
                         mDatabase.addLocation( new LocationInformation( mCoordinates ) );
                     } else {
-                        FirebaseInstance mDatabase = new FirebaseInstance();
+                        FbDatabase mDatabase = new FbDatabase();
                         mDatabase.cantAddLocation("Failed for some reason.");
                     }
                 }

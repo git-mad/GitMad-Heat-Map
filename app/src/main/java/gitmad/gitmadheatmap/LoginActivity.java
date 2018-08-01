@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private String password;
 
     // Firebase
-    FirebaseAuth mAuth;
+    FbAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         registerHere = findViewById(R.id.login_txt_register_here);
 
         // Firebase
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = new FbAuth();
 
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,37 +63,8 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailEntry.getText().toString();
                 String password = passwordEntry.getText().toString();
 
-
-
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Intent intent = new Intent( view.getContext(), EnterActivity.class);
-                                    startActivity(intent);
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                switch( ((FirebaseAuthException) e).getErrorCode()) {
-                                    case "ERROR_USER_NOT_FOUND":
-                                        Toast.makeText( LoginActivity.this, R.string.auth_user_not_found, Toast.LENGTH_LONG ).show();
-                                        break;
-                                    case "ERROR_WRONG_PASSWORD":
-                                        Toast.makeText( LoginActivity.this, R.string.auth_password_error, Toast.LENGTH_LONG ).show();
-                                        break;
-                                }
-                            }
-                        });
+                mAuth.signUserIn( email, password );
             }
         });
-    }
-
-    public boolean signInUser(String username, String password) {
-        //Sign in user with Firebase, and return if sign in was successful.
-        return true;
     }
 }

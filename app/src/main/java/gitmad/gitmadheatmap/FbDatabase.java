@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirebaseInstance {
+public class FbDatabase {
 
     // An instance of the database.
     private FirebaseDatabase mDatabase;
@@ -20,11 +20,10 @@ public class FirebaseInstance {
     // A reference to our root node of the database.
     private DatabaseReference mReference;
 
-    public FirebaseInstance() {
+    public FbDatabase() {
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference();
     }
-
     public void addLocation( LocationInformation locationInformation ){
         DatabaseReference myRef = mDatabase.getReference( "locations" );
         myRef.push().setValue( locationInformation );
@@ -59,5 +58,9 @@ public class FirebaseInstance {
 
             }
         });
+    }
+
+    public void setReferenceValue( String reference, Object value ) {
+        mDatabase.getReference( reference ).setValue( value );
     }
 }

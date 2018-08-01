@@ -26,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegistrationActivity extends AppCompatActivity {
 
     private Button registerButton;
-    private EditText usernameEntry;
     private EditText passwordEntry;
     private EditText emailEntry;
     private EditText fNameEntry;
@@ -78,30 +77,8 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            int at_location = email.indexOf( '@' );
-                            String username = email.substring( 0, at_location );
-                            DatabaseReference myRef = mDatabase.getReference( "users/" + username );
-                            myRef.setValue( new User( firstName, lastName, username ) );
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                switch( ((FirebaseAuthException) e).getErrorCode()) {
-                    case "ERROR_EMAIL_ALREADY_IN_USE":
-                        Toast.makeText( RegistrationActivity.this, R.string.auth_email_in_use, Toast.LENGTH_LONG ).show();
-                        break;
-                }
-            }
-        });
-
-
+        FbAuth mAuth = new FbAuth();
+        mAuth.createNewUser( new User( firstName, lastName, email), password);
     }
 
     private boolean areCredentialsValid() {
