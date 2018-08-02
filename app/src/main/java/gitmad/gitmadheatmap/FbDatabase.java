@@ -25,8 +25,8 @@ public class FbDatabase {
         mReference = mDatabase.getReference();
     }
     public void addLocation( LocationInformation locationInformation ){
-        DatabaseReference myRef = mDatabase.getReference( "locations" );
-        myRef.push().setValue( locationInformation );
+        DatabaseReference myRef = mDatabase.getReference( "locations/" + locationInformation.getUsername() );
+        myRef.setValue( locationInformation );
     }
 
     public void cantAddLocation( String why) {
@@ -50,7 +50,6 @@ public class FbDatabase {
                 }
 
                 locationCallback.onFinish( location_list );
-
             }
 
             @Override

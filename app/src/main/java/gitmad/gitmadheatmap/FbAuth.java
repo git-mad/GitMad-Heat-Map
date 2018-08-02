@@ -32,8 +32,7 @@ public class FbAuth {
         task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                int at_location = email.indexOf( '@' );
-                String username = email.substring( 0, at_location );
+                String username = emailToUsername( email );
                 mDatabase.setReferenceValue( "users/" + username, new User( firstName, lastName, username ) );
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -50,6 +49,11 @@ public class FbAuth {
                 }
             }
         });
+    }
+
+    public String getUserUsername() {
+        String userEmail = mAuth.getCurrentUser().getEmail();
+        return emailToUsername( userEmail );
     }
 
     public void signUserIn( String email, String password) {
@@ -75,5 +79,10 @@ public class FbAuth {
                 }
             }
         });
+    }
+
+    private String emailToUsername( String email ) {
+        int at_location = email.indexOf( '@' );
+        return email.substring( 0, at_location );
     }
 }
