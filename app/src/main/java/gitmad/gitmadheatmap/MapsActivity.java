@@ -118,6 +118,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onFinish(List<LatLng> locations) {
                 locations_list = locations;
+                if( locations_list.size() == 0 ) {
+                    return;
+                }
                 addHeatMap();
             }
         });
