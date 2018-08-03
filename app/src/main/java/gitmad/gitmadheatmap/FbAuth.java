@@ -1,8 +1,11 @@
 package gitmad.gitmadheatmap;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.LoginFilter;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,11 +55,14 @@ public class FbAuth {
     }
 
     public String getUserUsername() {
-        String userEmail = mAuth.getCurrentUser().getEmail();
-        return emailToUsername( userEmail );
+        if( isUserLoggedIn() ) {
+            String userEmail = mAuth.getCurrentUser().getEmail();
+            return emailToUsername( userEmail );
+        }
+        return "";
     }
 
-    public void signUserIn( String email, String password) {
+    public void signUserIn(String email, String password) {
 
         Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
 
@@ -64,6 +70,7 @@ public class FbAuth {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Intent intent = new Intent( MyApp.getContext(), EnterActivity.class );
+                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                 MyApp.getContext().startActivity( intent );
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -81,8 +88,32 @@ public class FbAuth {
         });
     }
 
+    /**
+     * Signs the user out of our firebase instance and returns them to the login screen.
+     */
+    public void signUserOutAndReturnToLogin() {
+        // Prevent from calling when user is not already logged in.
+        if( !isUserLoggedIn() ) {
+            return;
+        }
+
+        mAuth.signOut();
+
+        // Return user to login screen
+        Intent intent = new Intent( MyApp.getContext(), LoginActivity.class );
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        MyApp.getContext().startActivity( intent );
+    }
+
     private String emailToUsername( String email ) {
         int at_location = email.indexOf( '@' );
         return email.substring( 0, at_location );
+    }
+
+    public boolean isUserLoggedIn() {
+        if( mAuth.getCurrentUser() != null ) {
+            return true;
+        }
+        return false;
     }
 }

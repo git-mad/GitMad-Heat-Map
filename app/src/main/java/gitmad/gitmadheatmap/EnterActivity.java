@@ -76,5 +76,10 @@ public class EnterActivity extends AppCompatActivity {
         stopButton.setEnabled( !alarm_on );
     }
 
+    public void logoutUser( View view ) {
+        FbAuth mAuth = new FbAuth();
+        mAuth.signUserOutAndReturnToLogin();
+    }
+
 
 }

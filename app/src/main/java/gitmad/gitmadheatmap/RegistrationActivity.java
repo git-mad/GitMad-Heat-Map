@@ -79,6 +79,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
         FbAuth mAuth = new FbAuth();
         mAuth.createNewUser( new User( firstName, lastName, email), password);
+
+        Intent intent = new Intent( this, EnterActivity.class );
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        startActivity( intent );
     }
 
     private boolean areCredentialsValid() {

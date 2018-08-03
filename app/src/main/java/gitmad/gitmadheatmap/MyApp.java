@@ -2,6 +2,7 @@ package gitmad.gitmadheatmap;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 
 public class MyApp extends Application {
     private static Context mContext;
@@ -15,4 +16,5 @@ public class MyApp extends Application {
     public static Context getContext() {
         return mContext;
     }
+
 }
