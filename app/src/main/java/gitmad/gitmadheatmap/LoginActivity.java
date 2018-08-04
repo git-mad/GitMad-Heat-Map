@@ -1,23 +1,13 @@
 package gitmad.gitmadheatmap;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     private String username;
     private String password;
 
+    private Context mContext;
+
     // Firebase
     FbAuth mAuth;
 
@@ -37,13 +29,21 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Firebase
+        mAuth = new FbAuth();
+
+        // Activity context
+        mContext = this;
+
+        if( mAuth.isUserLoggedIn() ) {
+            transitionToEnterActivity();
+        }
+
         signInButton = findViewById(R.id.login_btn_signIn);
         passwordEntry = findViewById(R.id.login_editText_password);
         emailEntry = findViewById(R.id.login_editText_email);
         registerHere = findViewById(R.id.login_txt_register_here);
 
-        // Firebase
-        mAuth = new FbAuth();
 
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,5 +66,11 @@ public class LoginActivity extends AppCompatActivity {
                 mAuth.signUserIn( email, password );
             }
         });
+    }
+
+    private void transitionToEnterActivity() {
+        Intent intent = new Intent( this, EnterActivity.class );
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        startActivity( intent );
     }
 }

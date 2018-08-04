@@ -8,10 +8,12 @@ import java.util.Date;
 public class LocationInformation {
     private LatLng location;
     private String currentTime;
+    private String username;
 
-    public LocationInformation( LatLng location ) {
+    public LocationInformation( LatLng location, String username ) {
         this.location = location;
         currentTime = DateFormat.getDateTimeInstance().format( new Date() );
+        this.username = username;
     }
 
     public LatLng getLocation() {
@@ -21,4 +23,6 @@ public class LocationInformation {
     public String getCurrentTime() {
         return this.currentTime;
     }
+
+    public String getUsername() { return this.username; }
 }

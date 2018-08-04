@@ -30,6 +30,7 @@
     <string name="middle_name">Middle Name</string>
     <string name="last_name">Last Name</string>
     <string name="register">Register</string>
+    <string name="logout">Logout</string>
 
     <!-- Strings related to FirebaseAuth Exceptions -->
     <string name="auth_user_not_found">That email is not associated to an account</string>

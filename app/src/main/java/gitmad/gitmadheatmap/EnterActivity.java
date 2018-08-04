@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class EnterActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class EnterActivity extends AppCompatActivity {
         } else {
             setAlarmButtons( true );
         }
+
     }
 
     public void enter_map_activity( View view )
@@ -73,4 +75,11 @@ public class EnterActivity extends AppCompatActivity {
         startButton.setEnabled( alarm_on );
         stopButton.setEnabled( !alarm_on );
     }
+
+    public void logoutUser( View view ) {
+        FbAuth mAuth = new FbAuth();
+        mAuth.signUserOutAndReturnToLogin();
+    }
+
+
 }

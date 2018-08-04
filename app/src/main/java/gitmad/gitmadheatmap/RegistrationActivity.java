@@ -71,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
         final String email = emailEntry.getText().toString();
         final String password = passwordEntry.getText().toString();
         final String firstName = fNameEntry.getText().toString();
-        final String lastName = fNameEntry.getText().toString();
+        final String lastName = lNameEntry.getText().toString();
 
         if( !areCredentialsValid() ) {
             return;
@@ -79,6 +79,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
         FbAuth mAuth = new FbAuth();
         mAuth.createNewUser( new User( firstName, lastName, email), password);
+
+        Intent intent = new Intent( this, EnterActivity.class );
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        startActivity( intent );
     }
 
     private boolean areCredentialsValid() {
