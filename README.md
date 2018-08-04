@@ -11,5 +11,9 @@
     <h4>Making sign in optional. Users should be able to see the map without creating an account.</h6>
     <p>If we do this we should look to find some way to link an anonymous user to locations so that they only have one piece of data associated with them. My thought is we create a preference that is used when the user is not signed in, and if they create an account we just use their username as normal.</p>
   </div>
+  <div>
+    <h4>Add a hamburger on the top left for options like sign out and view account information.</h6>
+    <p>As of right now I don't really know what all would be inlcuded in this area. It may be a little more difficult to try and include that now, but I think it is worth a shot. You could have paths to account info, signing out, and maybe something like viewing friends.</p>
+  </div>
 </div>
  
