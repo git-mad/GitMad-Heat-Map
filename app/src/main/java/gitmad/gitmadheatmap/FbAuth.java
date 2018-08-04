@@ -27,7 +27,6 @@ public class FbAuth {
 
     public void createNewUser(final User user, String password) {
         final String email = user.getEmail();
-        Toast.makeText( MyApp.getContext(), email, Toast.LENGTH_LONG ).show();
         final String firstName = user.getFirstName();
         final String lastName = user.getLastName();
         Task<AuthResult> task = mAuth.createUserWithEmailAndPassword( email, password );
