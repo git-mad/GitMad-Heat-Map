@@ -71,7 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
         final String email = emailEntry.getText().toString();
         final String password = passwordEntry.getText().toString();
         final String firstName = fNameEntry.getText().toString();
-        final String lastName = fNameEntry.getText().toString();
+        final String lastName = lNameEntry.getText().toString();
 
         if( !areCredentialsValid() ) {
             return;
