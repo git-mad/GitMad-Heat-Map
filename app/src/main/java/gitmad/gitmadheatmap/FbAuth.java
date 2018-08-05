@@ -66,6 +66,7 @@ public class FbAuth {
             public void onSuccess(AuthResult authResult) {
                 Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
                 MyApp.getContext().startActivity( intent );
             }
         }).addOnFailureListener(new OnFailureListener() {

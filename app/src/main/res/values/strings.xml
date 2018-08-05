@@ -45,4 +45,8 @@
 
     <!-- Navigation header strings -->
     <string name="nav_home_option">Home</string>
+    <string name="nav_map_option">Map</string>
+
+    <!-- Intent extra string -->
+    <string name="intent_menu_item">MENU_ITEM</string>
 </resources>

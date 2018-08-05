@@ -4,7 +4,11 @@
         <item
             android:id="@+id/nav_home_option"
             android:title="@string/nav_home_option"
-            android:icon="@drawable/ic_home_icon"
+            android:icon="@drawable/ic_home_icon" />
+        <item
+            android:id="@+id/nav_map_option"
+            android:title="@string/nav_map_option"
+            android:icon="@drawable/ic_map_icon"
             android:checked="true"/>
     </group>
 </menu>

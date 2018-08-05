@@ -73,6 +73,7 @@ public class ActivityRegistration extends AppCompatActivity {
 
         Intent intent = new Intent( this, ActivityUserLoggedIn.class );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
         startActivity( intent );
     }
 
