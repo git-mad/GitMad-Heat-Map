@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class LoginActivity extends AppCompatActivity {
+public class ActivityLogin extends AppCompatActivity {
 
 
     private TextView registerHere;
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 username = emailEntry.getText().toString();
                 password = passwordEntry.getText().toString();
-                Intent intent = new Intent(view.getContext(), RegistrationActivity.class);
+                Intent intent = new Intent(view.getContext(), ActivityRegistration.class);
                 intent.putExtra("enteredUsername", username);
                 intent.putExtra("enteredPassword", password);
                 startActivity(intent);
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void transitionToEnterActivity() {
-        Intent intent = new Intent( this, EnterActivity.class );
+        Intent intent = new Intent( this, ActivityUserLoggedIn.class );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
         startActivity( intent );
     }

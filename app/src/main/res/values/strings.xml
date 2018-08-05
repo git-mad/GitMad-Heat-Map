@@ -42,4 +42,7 @@
     <string name="reg_invalid_email">There must be an "@" sign in your email</string>
     <string name="reg_invalid_password">Passwords must at least be 6 characters in length</string>
     <string name="reg_empty_email">Please enter an email</string>
+
+    <!-- Navigation header strings -->
+    <string name="nav_home_option">Home</string>
 </resources>

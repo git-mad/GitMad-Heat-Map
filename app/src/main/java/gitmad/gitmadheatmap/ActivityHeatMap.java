@@ -47,7 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class ActivityHeatMap extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private HeatmapTileProvider mProvider;

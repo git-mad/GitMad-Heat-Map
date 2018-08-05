@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EnterActivity">
+    tools:context=".FragmentEnter">
 
     <Button
         android:id="@+id/enter_btn_enter_map"
@@ -13,7 +13,6 @@
         android:layout_marginBottom="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:onClick="enter_map_activity"
         android:text="@string/btn_enter_map"
         app:layout_constraintBottom_toTopOf="@+id/enter_btn_start_alarm"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +26,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="start_alarm"
         android:text="@string/btn_start_alarm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +41,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
         android:enabled="false"
-        android:onClick="stop_alarm"
         android:text="@string/btn_stop_alarm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +68,6 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:background="?attr/colorError"
-        android:onClick="logoutUser"
         android:text="@string/logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
