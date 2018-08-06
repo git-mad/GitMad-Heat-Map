@@ -1,11 +1,7 @@
 package gitmad.gitmadheatmap;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.text.LoginFilter;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,8 +64,9 @@ public class FbAuth {
         task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Intent intent = new Intent( MyApp.getContext(), EnterActivity.class );
+                Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
                 MyApp.getContext().startActivity( intent );
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -99,7 +96,7 @@ public class FbAuth {
         mAuth.signOut();
 
         // Return user to login screen
-        Intent intent = new Intent( MyApp.getContext(), LoginActivity.class );
+        Intent intent = new Intent( MyApp.getContext(), ActivityLogin.class );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
         MyApp.getContext().startActivity( intent );
     }

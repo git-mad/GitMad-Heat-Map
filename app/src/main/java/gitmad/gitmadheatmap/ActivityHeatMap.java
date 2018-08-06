@@ -10,11 +10,20 @@ import android.location.Location;
 import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,7 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private HeatmapTileProvider mProvider;
@@ -68,20 +77,104 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private List<LatLng> locations_list;
 
+    private DrawerLayout mDrawerLayout;
+    private Intent drawerIntent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mDatabase = new FbDatabase();
 
+        setContentView(R.layout.activity_maps);
+
+        // Setup toolbar
+        Toolbar toolbar = findViewById( R.id.loggedIn_toolbar );
+        setSupportActionBar( toolbar );
+        getSupportActionBar().setDisplayShowTitleEnabled( false );
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled( true );
+        actionBar.setHomeAsUpIndicator( R.drawable.ic_menu_icon );
+
+        // Manage DrawerLayout
+        setupDrawer();
+
         // Provide quick access to the device's current place
         mPlaceDetectionClient = Places.getPlaceDetectionClient( this, null );
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient( this );
 
-        setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         setUpMap();
+
+
+    }
+
+    /**
+     * Method to set up the navigation drawer for this activity.
+     */
+    private void setupDrawer() {
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        // We initialize this listener mainly for its ability to remove lag when changing activities.
+        // By waiting for the drawer to fully close, the animation looks smooth and cleanly executed.
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                //
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                //
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                if( drawerIntent != null) {
+                    startActivity( drawerIntent );
+                }
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                //
+            }
+        });
+
+        NavigationView navigationView = findViewById( R.id.nav_view );
+        navigationView.setCheckedItem( R.id.nav_map_option);
+
+        // A listener that handles onClicks for menu items in the navigation drawer.
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch( item.getItemId() ) {
+                            case R.id.nav_home_option:
+                                Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
+                                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
+                                drawerIntent = intent;
+                        }
+
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                }
+        );
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item ) {
+        switch( item.getItemId() ) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer( GravityCompat.START );
+                return true;
+        }
+
+        return super.onOptionsItemSelected( item );
     }
 
     private void setUpMap() {
