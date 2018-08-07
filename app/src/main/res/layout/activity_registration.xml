@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/first_name"
-                    android:inputType="textCapSentences" />
+                    android:inputType="textCapSentences|textPersonName" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/last_name"
-                    android:inputType="textCapSentences" />
+                    android:inputType="textCapSentences|textPersonName" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
-                    android:inputType="textCapSentences" />
+                    android:inputType="textCapSentences|textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
