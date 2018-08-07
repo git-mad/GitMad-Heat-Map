@@ -3,6 +3,7 @@ package gitmad.gitmadheatmap;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,8 +34,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
 
         // Set the fragment that the activity initializes to.
-        FragmentEnter fragmentEnter = new FragmentEnter();
-        fragmentTransaction.add( R.id.loggedIn_frame_fragment_container, fragmentEnter );
+        fragmentTransaction.add( R.id.loggedIn_frame_fragment_container, getFragmentToBeDisplayed() );
         fragmentTransaction.commit();
 
         // Manage DrawerLayout
@@ -128,7 +128,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
 
     /**
      * Obtains the drawer menu item selected (passed from previous activity) and returns that value.
-     * @return Passes the int value for the id for the menu item we want to be preselected
+     * @return The int value for the id for the menu item we want to be selected.
      */
     private int getMenuItemSelected() {
         String selectedMenuItem = getIntent().getStringExtra( Integer.toString( R.string.intent_menu_item ) );
@@ -138,5 +138,20 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         }
 
         return R.id.nav_home_option;
+    }
+
+    /**
+     * Obtains the drawer menu item selected (passed from previous activity) and returns the fragment
+     * that should be loaded based on that value.
+     * @return The fragment that should be loaded within this activity.
+     */
+    private Fragment getFragmentToBeDisplayed() {
+        String selectedMenuItem = getIntent().getStringExtra( Integer.toString( R.string.intent_menu_item ) );
+        switch( selectedMenuItem ) {
+            case "nav_home_option":
+                return new FragmentEnter();
+        }
+
+        return new FragmentEnter();
     }
 }
