@@ -3,6 +3,10 @@ package gitmad.gitmadheatmap;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Class for app user's.
+ * This class is mainly used for storing information in our database in a neat and easy to read manner.
+ */
 public class User  {
 
     private String firstName;

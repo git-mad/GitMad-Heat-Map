@@ -19,9 +19,7 @@ public class ActivityLogin extends AppCompatActivity {
     private String username;
     private String password;
 
-    private Context mContext;
-
-    // Firebase
+    // Firebase.
     FbAuth mAuth;
 
     @Override
@@ -29,21 +27,19 @@ public class ActivityLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Firebase
+        // Firebase.
         mAuth = new FbAuth();
 
-        // Activity context
-        mContext = this;
-
+        // If user is already logged in, transition them to the UserLoggedIn activity
         if( mAuth.isUserLoggedIn() ) {
             transitionToEnterActivity();
         }
 
+        // Layout elements.
         signInButton = findViewById(R.id.login_btn_signIn);
         passwordEntry = findViewById(R.id.login_editText_password);
         emailEntry = findViewById(R.id.login_editText_email);
         registerHere = findViewById(R.id.login_txt_register_here);
-
 
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +64,10 @@ public class ActivityLogin extends AppCompatActivity {
         });
     }
 
+    /**
+     * Method for transitioning from the current activity to the UserLoggedIn activity when the user
+     * is already signed in and opening the app.
+     */
     private void transitionToEnterActivity() {
         Intent intent = new Intent( this, ActivityUserLoggedIn.class );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );

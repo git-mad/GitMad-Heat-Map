@@ -17,10 +17,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 public class AlarmCalledReceiver extends BroadcastReceiver {
 
     @Override
@@ -32,18 +28,27 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
         }
     }
 
-    // Checks if we have an internet connection.
+    /**
+     * Checks to see if the user has a current internet connection.
+     * @param context Current context.
+     * @return true if the user has an internet connection, false otherwise.
+     */
     private boolean isNetworkAvailable( Context context ) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    // Add a users's location to our database.
+    /**
+     * Create a task handler that gets the users current location and then uploads it to the database.
+     * @param context Current context
+     */
     private void updateUserLocation(final Context context ) {
+        // If the user does not grant location permissions then their information will not be uploaded.
         if(ContextCompat.checkSelfPermission( context, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
             FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
 
+            // Create new task promise.
             final Task locationResult = mFusedLocationProviderClient.getLastLocation();
 
             locationResult.addOnCompleteListener( new OnCompleteListener() {
@@ -56,9 +61,6 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
                         LatLng mCoordinates = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                         FbDatabase mDatabase = new FbDatabase();
                         mDatabase.addLocation( new LocationInformation( mCoordinates, new FbAuth().getUserUsername() ) );
-                    } else {
-                        FbDatabase mDatabase = new FbDatabase();
-                        mDatabase.cantAddLocation("Failed for some reason.");
                     }
                 }
             });
