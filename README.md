@@ -15,5 +15,9 @@
     <p>UI wise this may look better being at the bottom of the drawer, but I am not sure if material design has anything to say about this. I would look through the material design standards first and do what it says. If it does not have anything then I would see if you can implement one at the bottom and on in the menu item list and just see which looks better.</p>
     <p>Remember there are two instances of the nav drawer (one in the UserLoggedIn activity and one in the HeatMap activity) so add them in both instances.</p>
   </div>
+   <div>
+    <h4>Write a script to auto-remove location instances.</h4>
+    <p>This will most likely be ran from some hosting service like heroku. Ask Lucas if you have any questions.</p>
+  </div>
 </div>
  
