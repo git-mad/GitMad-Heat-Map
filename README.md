@@ -7,11 +7,6 @@
   
 <div>
   <h3>These are things that I think we could add quickly that would help out a lot:</h3>
-  <div>
-    <h4>Making sign in optional. Users should be able to see the map without creating an account.</h6>
-    <p>If we do this we should look to find some way to link an anonymous user to locations so that they only have one piece of data associated with them. My thought is we create a preference that is used when the user is not signed in, and if they create an account we just use their username as normal.</p>
-  </div>
-  <div>
     <h4>Add user account information to the nagivation drawer.</h4>
     <p>This one is pretty straight to the point. Add a fragment for this and add a link in the navigation drawer.</p>
   </div>
