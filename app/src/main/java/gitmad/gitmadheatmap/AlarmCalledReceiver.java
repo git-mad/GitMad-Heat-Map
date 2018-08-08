@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -60,10 +61,30 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
                         mLastKnownLocation = (Location) task.getResult();
                         LatLng mCoordinates = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                         FbDatabase mDatabase = new FbDatabase();
-                        mDatabase.addLocation( new LocationInformation( mCoordinates, new FbAuth().getUserUsername() ) );
+
+                        // Get the user's username.
+                        String username = retrieveUsername();
+                        mDatabase.addLocation( new LocationInformation( mCoordinates, username ) );
                     }
                 }
             });
         }
+    }
+
+    /**
+     * Retrieve identification of the current user.
+     * @return the user's username if they are logged in or their userID if they are logged out.
+     */
+    private String retrieveUsername() {
+        SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
+        String userId = sharedPreferences.getString( MyApp.getContext().getString( R.string.pref_user_username), null );
+
+        if( userId != null ) {
+            return userId;
+        }
+
+        userId = sharedPreferences.getString( MyApp.getContext().getString( R.string.pref_user_id ), null );
+
+        return userId;
     }
 }

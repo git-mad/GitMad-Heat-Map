@@ -1,6 +1,8 @@
 package gitmad.gitmadheatmap;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -45,6 +47,9 @@ public class FbAuth {
             public void onSuccess(AuthResult authResult) {
                 String username = emailToUsername( email );
                 mDatabase.setReferenceValue( "users/" + username, new User( firstName, lastName, username ) );
+
+                // Create local shared preference for user username.
+                setUsernamePreference( username );
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -66,6 +71,30 @@ public class FbAuth {
     }
 
     /**
+     * Create a local username reference.
+     * This will be helpful when our alarm sounds. Instead of creating a new Auth instance, we can just
+     * use this reference instead.
+     * @param username
+     */
+    private void setUsernamePreference( String username ) {
+        SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), username );
+        editor.apply();
+    }
+
+    /**
+     * Remove the username SharedPreference value.
+     * Without the username SharedPreference, we cannot associate a location with a specific user.
+     */
+    private void removeUsernamePreference() {
+        SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove( MyApp.getContext().getString( R.string.pref_preferences ) );
+        editor.apply();
+    }
+
+    /**
      * Retrieve the currently logged in user's username.
      * @return Current user username.
      */
@@ -83,6 +112,9 @@ public class FbAuth {
      * @param password The user's password.
      */
     public void signUserIn(String email, String password) {
+
+        // Set our username preference.
+        setUsernamePreference( emailToUsername( email ) );
 
         // Create new task promise for signing in a user.
         Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
@@ -125,7 +157,11 @@ public class FbAuth {
             return;
         }
 
+        // Sign out from auth instance.
         mAuth.signOut();
+
+        // Remove username preference.
+        removeUsernamePreference();
 
         // Return user to login screen.
         Intent intent = new Intent( MyApp.getContext(), ActivityLogin.class );

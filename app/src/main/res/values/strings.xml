@@ -23,6 +23,7 @@
     <string name="dont_have_account">Don\'t have an account? Register Here</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="no_account_login">Enter app and create an account later</string>
 
     <!-- Strings related to registration -->
     <string name="create_account">Create a new account</string>
@@ -37,6 +38,11 @@
     <string name="auth_password_error">The login credentials do not match</string>
     <string name="auth_email_in_use">That email is already in use</string>
     <string name="auth_invalid_email">Please enter a valid email</string>
+
+    <!-- SharedPreference keys  -->
+    <string name="pref_preferences">preferences</string>
+    <string name="pref_user_id">userId</string>
+    <string name="pref_user_username">username</string>
 
     <!-- Strings related to Registration Exceptions -->
     <string name="reg_invalid_email">There must be an "@" sign in your email</string>
