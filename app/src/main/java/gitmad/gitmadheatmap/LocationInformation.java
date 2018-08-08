@@ -5,6 +5,10 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.DateFormat;
 import java.util.Date;
 
+/**
+ * Class for storing location information.
+ * This is mainly used so we can nicely store information within our database.
+ */
 public class LocationInformation {
     private LatLng location;
     private String currentTime;

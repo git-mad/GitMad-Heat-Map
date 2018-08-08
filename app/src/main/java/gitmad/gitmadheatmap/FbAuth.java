@@ -1,6 +1,8 @@
 package gitmad.gitmadheatmap;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -21,20 +23,39 @@ public class FbAuth {
         mDatabase = new FbDatabase();
     }
 
+    /**
+     * Create a new user within both our auth and database on Firebase.
+     * Auth is specifically for authentication purposes, while the database entry allows us to store
+     * more information about the user like their name.
+     * @param user The associated user.
+     * @param password The user's password.
+     */
     public void createNewUser(final User user, String password) {
         final String email = user.getEmail();
         final String firstName = user.getFirstName();
         final String lastName = user.getLastName();
+
+        // Create new task promise for creating an auth entry.
         Task<AuthResult> task = mAuth.createUserWithEmailAndPassword( email, password );
 
         task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
+            /**
+             * Create a new database entry if the auth entry succeeds.
+             * NOTE: Do not ever store someone's password. That is something not even our eyes deserve to see.
+             */
             public void onSuccess(AuthResult authResult) {
                 String username = emailToUsername( email );
                 mDatabase.setReferenceValue( "users/" + username, new User( firstName, lastName, username ) );
+
+                // Create local shared preference for user username.
+                setUsernamePreference( username );
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
+            /**
+             * Notify the user if there was an error when creating a new auth entry.
+             */
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText( MyApp.getContext(), ( (FirebaseAuthException) e).getErrorCode() , Toast.LENGTH_LONG ).show();
                 switch( ((FirebaseAuthException) e).getErrorCode()) {
@@ -49,6 +70,34 @@ public class FbAuth {
         });
     }
 
+    /**
+     * Create a local username reference.
+     * This will be helpful when our alarm sounds. Instead of creating a new Auth instance, we can just
+     * use this reference instead.
+     * @param username
+     */
+    private void setUsernamePreference( String username ) {
+        SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), username );
+        editor.apply();
+    }
+
+    /**
+     * Remove the username SharedPreference value.
+     * Without the username SharedPreference, we cannot associate a location with a specific user.
+     */
+    private void removeUsernamePreference() {
+        SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove( MyApp.getContext().getString( R.string.pref_preferences ) );
+        editor.apply();
+    }
+
+    /**
+     * Retrieve the currently logged in user's username.
+     * @return Current user username.
+     */
     public String getUserUsername() {
         if( isUserLoggedIn() ) {
             String userEmail = mAuth.getCurrentUser().getEmail();
@@ -57,12 +106,24 @@ public class FbAuth {
         return "";
     }
 
+    /**
+     * Perform an auth login request to log a user into our app.
+     * @param email The user's email.
+     * @param password The user's password.
+     */
     public void signUserIn(String email, String password) {
 
+        // Set our username preference.
+        setUsernamePreference( emailToUsername( email ) );
+
+        // Create new task promise for signing in a user.
         Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
 
         task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
+            /**
+             * Start the UserLoggedIn activity.
+             */
             public void onSuccess(AuthResult authResult) {
                 Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
@@ -71,6 +132,9 @@ public class FbAuth {
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
+            /**
+             * Notify the user as to why they were unable to login to the app.
+             */
             public void onFailure(@NonNull Exception e) {
                 switch( ((FirebaseAuthException) e).getErrorCode()) {
                     case "ERROR_USER_NOT_FOUND":
@@ -85,7 +149,7 @@ public class FbAuth {
     }
 
     /**
-     * Signs the user out of our firebase instance and returns them to the login screen.
+     * Signs the user out of our auth and returns them to the login screen.
      */
     public void signUserOutAndReturnToLogin() {
         // Prevent from calling when user is not already logged in.
@@ -93,19 +157,32 @@ public class FbAuth {
             return;
         }
 
+        // Sign out from auth instance.
         mAuth.signOut();
 
-        // Return user to login screen
+        // Remove username preference.
+        removeUsernamePreference();
+
+        // Return user to login screen.
         Intent intent = new Intent( MyApp.getContext(), ActivityLogin.class );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
         MyApp.getContext().startActivity( intent );
     }
 
+    /**
+     * Converts a user's email into an username.
+     * @param email A email address.
+     * @return The username that would be associated with the email.
+     */
     private String emailToUsername( String email ) {
         int at_location = email.indexOf( '@' );
         return email.substring( 0, at_location );
     }
 
+    /**
+     * Indicates if a user is logged in.
+     * @return true if the user is currently logged into the auth, false otherwise.
+     */
     public boolean isUserLoggedIn() {
         if( mAuth.getCurrentUser() != null ) {
             return true;

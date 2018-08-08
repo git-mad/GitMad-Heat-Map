@@ -7,13 +7,17 @@
   
 <div>
   <h3>These are things that I think we could add quickly that would help out a lot:</h3>
-  <div>
-    <h4>Making sign in optional. Users should be able to see the map without creating an account.</h6>
-    <p>If we do this we should look to find some way to link an anonymous user to locations so that they only have one piece of data associated with them. My thought is we create a preference that is used when the user is not signed in, and if they create an account we just use their username as normal.</p>
+    <h4>Add user account information to the nagivation drawer.</h4>
+    <p>This one is pretty straight to the point. Add a fragment for this and add a link in the navigation drawer.</p>
   </div>
   <div>
-    <h4>Add a hamburger on the top left for options like sign out and view account information.</h6>
-    <p>As of right now I don't really know what all would be inlcuded in this area. It may be a little more difficult to try and include that now, but I think it is worth a shot. You could have paths to account info, signing out, and maybe something like viewing friends.</p>
+    <h4>Remove log out button from the home screen and place it in the navigation drawer.</h4>
+    <p>UI wise this may look better being at the bottom of the drawer, but I am not sure if material design has anything to say about this. I would look through the material design standards first and do what it says. If it does not have anything then I would see if you can implement one at the bottom and on in the menu item list and just see which looks better.</p>
+    <p>Remember there are two instances of the nav drawer (one in the UserLoggedIn activity and one in the HeatMap activity) so add them in both instances.</p>
+  </div>
+   <div>
+    <h4>Write a script to auto-remove location instances.</h4>
+    <p>This will most likely be ran from some hosting service like heroku. Ask Lucas if you have any questions.</p>
   </div>
 </div>
  

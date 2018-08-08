@@ -5,16 +5,15 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.SystemClock;
-import android.widget.Toast;
 
 public class AlarmOnBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent ) {
 
-        // If this is broadcast receiver is started from a boot intent.
+        // If this is broadcast receiver is started from a boot intent then create an alarmManager instance
+        // that runs every fifteen minutes.
         if( intent.getAction().equals( "android.intent.action.BOOT_COMPLETED" ) ) {
             AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
             Intent alarmIntent = new Intent( context, AlarmCalledReceiver.class);

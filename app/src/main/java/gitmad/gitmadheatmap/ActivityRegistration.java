@@ -20,7 +20,6 @@ public class ActivityRegistration extends AppCompatActivity {
     private EditText passwordEntry;
     private EditText emailEntry;
     private EditText fNameEntry;
-    private EditText mNameEntry;
     private EditText lNameEntry;
     private String email;
     private String password;
@@ -34,12 +33,14 @@ public class ActivityRegistration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        // Layout elements.
         registerButton = findViewById(R.id.register_btn_create_account);
         passwordEntry = findViewById(R.id.register_editText_password);
         emailEntry = findViewById(R.id.register_editText_email);
         fNameEntry = findViewById(R.id.register_editText_first_name);
         lNameEntry = findViewById(R.id.register_editText_last_name);
 
+        // Set information passed in from previous activity if it exists.
         Intent intent = getIntent();
         email = intent.getStringExtra("enteredUsername");
         password = intent.getStringExtra("enteredPassword");
@@ -58,38 +59,49 @@ public class ActivityRegistration extends AppCompatActivity {
         });
     }
 
+    /**
+     * Register a new user within our firebase auth instance.
+     */
     public void registerUser() {
+        // Layout elements.
         final String email = emailEntry.getText().toString();
         final String password = passwordEntry.getText().toString();
         final String firstName = fNameEntry.getText().toString();
         final String lastName = lNameEntry.getText().toString();
 
+        // If the entered credentials by the user are not valid, then prevent them from registering.
         if( !areCredentialsValid() ) {
             return;
         }
 
+        // Create new user in firebase.
         FbAuth mAuth = new FbAuth();
         mAuth.createNewUser( new User( firstName, lastName, email), password);
 
+        // Start the UserLoggedIn activity.
         Intent intent = new Intent( this, ActivityUserLoggedIn.class );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
         intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
         startActivity( intent );
     }
 
+    /**
+     * Method for checking if the user credentials entered are valid to create a new account.
+     * @return true if the credentials are valid, false otherwise.
+     */
     private boolean areCredentialsValid() {
         // Store values at the time of the login attempt.
         String email = emailEntry.getText().toString();
         String password = passwordEntry.getText().toString();
 
-        // Check for a valid password, if the user entered one.
+        // Check if the user entered a password and if it is considered valid.
         if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             notifyUserError( "INVALID_PASSWORD" );
 
             return false;
         }
 
-        // Check for a valid email address.
+        // Check if there is an entered email, and if so, if it is considered valid.
         if (TextUtils.isEmpty(email)) {
             notifyUserError("EMPTY_EMAIL");
 
@@ -106,6 +118,10 @@ public class ActivityRegistration extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * On a failed attempt to create a new account, notify the user why the account creation failed.
+     * @param error Error reason for failed account creation.
+     */
     private void notifyUserError( String error ) {
         switch( error) {
             case "INVALID_PASSWORD":
@@ -120,10 +136,20 @@ public class ActivityRegistration extends AppCompatActivity {
         }
     }
 
+    /**
+     * Our check for password validation.
+     * @param password The user's password
+     * @return password's validity.
+     */
     private boolean isPasswordValid( String password ) {
         return password.length() > 5;
     }
 
+    /**
+     * Our check for email validation.
+     * @param email The user's email.
+     * @return email's validity.
+     */
     private boolean isEmailValid(String email) {
         return email.contains("@");
     }
