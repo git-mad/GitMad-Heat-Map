@@ -6,92 +6,23 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="gitmad.gitmadheatmap.ActivityLogin">
 
+<!-- Lets create a simple sign in interface. For this we will need multiple things! On our list we will include:
+    1) A textView that tells us that we are on the sign in screen.
+    2) An editText view for emails
+    3) An editText view for passwords
+    4) A button that the user can press to sign in
+    5) A button that the user can press to create a new account
 
-<TextView
-    android:id="@+id/login_txt_signIn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="40dp"
-    android:text="@string/action_sign_in_short"
-    android:textSize="40sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    We already see that this viewGroup is a constraint layout. This view is very easy to use when it comes
+    to positioning elements. When creating this view we will mainly use the design tab. Let's start! -->
 
-<Button
-    android:id="@+id/login_btn_signIn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="32dp"
-    android:text="@string/action_sign_in_short"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.498"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+    <!-- TODO 1: Create a textView positioned on the top of the page. Have the text indicate this is the sign in page. -->
 
-    <TextView
-        android:id="@+id/login_txt_register_here"
-        android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:layout_marginBottom="75dp"
-        android:text="@string/dont_have_account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!-- TODO 2: Create two editText views under the sign in textView that are intended for a user's email and password. -->
 
-    <android.support.design.widget.TextInputLayout
-    android:id="@+id/textInputLayout2"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="32dp"
-    android:layout_marginStart="32dp"
-    android:layout_marginTop="32dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/login_txt_signIn">
+    <!-- TODO 3: Create a button that allows user's to sign in. -->
 
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/login_editText_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_email"
-        android:inputType="textCapSentences|textEmailAddress" />
-</android.support.design.widget.TextInputLayout>
-
-<android.support.design.widget.TextInputLayout
-    android:id="@+id/textInputLayout3"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="32dp"
-    android:layout_marginStart="32dp"
-    android:layout_marginTop="16dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
-
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/login_editText_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_password"
-        android:inputType="textPassword" />
-</android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="enterAppWithoutSigningIn"
-        android:text="@string/no_account_login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_txt_register_here" />
+    <!-- TODO 4: Place a button on the bottom of the screen that allows the user to switch to the registration activity. -->
+    <!-- Make sure that the registration button has an ID of login_btn_register_here -->
 
 </android.support.constraint.ConstraintLayout>
