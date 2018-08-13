@@ -90,7 +90,7 @@ public class FbAuth {
     private void removeUsernamePreference() {
         SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove( MyApp.getContext().getString( R.string.pref_preferences ) );
+        editor.remove( MyApp.getContext().getString( R.string.pref_user_username) );
         editor.apply();
     }
 
@@ -153,15 +153,13 @@ public class FbAuth {
      */
     public void signUserOutAndReturnToLogin() {
         // Prevent from calling when user is not already logged in.
-        if( !isUserLoggedIn() ) {
-            return;
+        if( isUserLoggedIn() ) {
+            // Sign out from auth instance.
+            mAuth.signOut();
+
+            // Remove username preference.
+            removeUsernamePreference();
         }
-
-        // Sign out from auth instance.
-        mAuth.signOut();
-
-        // Remove username preference.
-        removeUsernamePreference();
 
         // Return user to login screen.
         Intent intent = new Intent( MyApp.getContext(), ActivityLogin.class );
