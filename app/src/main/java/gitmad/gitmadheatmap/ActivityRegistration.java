@@ -42,8 +42,7 @@ public class ActivityRegistration extends AppCompatActivity {
 
         // Set information passed in from previous activity if it exists.
         Intent intent = getIntent();
-        email = intent.getStringExtra("enteredUsername");
-        password = intent.getStringExtra("enteredPassword");
+        email = intent.getStringExtra("email");
         emailEntry.setText(email);
         passwordEntry.setText(password);
 

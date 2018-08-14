@@ -20,8 +20,6 @@ public class ActivityLogin extends AppCompatActivity {
     private EditText passwordEntry;
     private EditText emailEntry;
     private Button signInButton;
-    private String username;
-    private String password;
 
     // Firebase.
     FbAuth mAuth;
@@ -59,11 +57,9 @@ public class ActivityLogin extends AppCompatActivity {
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = emailEntry.getText().toString();
-                password = passwordEntry.getText().toString();
+                String email = emailEntry.getText().toString();
                 Intent intent = new Intent(view.getContext(), ActivityRegistration.class);
-                intent.putExtra("enteredUsername", username);
-                intent.putExtra("enteredPassword", password);
+                intent.putExtra("email", email);
                 startActivity(intent);
             }
         });
