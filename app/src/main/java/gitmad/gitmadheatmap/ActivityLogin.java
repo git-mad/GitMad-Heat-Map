@@ -41,7 +41,7 @@ public class ActivityLogin extends AppCompatActivity {
         // TODO 1: Create a new OnClickListener for our register button. This button should start the ActivityRegistration Activity.
         // TODO 1.1 (optional): Pass along the user's email in this intent.
 
-        // TODO 5: Create a OnClickListener for our login button.
+        // TODO 6: Create a OnClickListener for our login button.
         // We will not handle the intent logic here. It is handled in the mAuth class. Look in that class and see what method you should call to transition to the ActivityUserLoggedIn activity.
 
     }

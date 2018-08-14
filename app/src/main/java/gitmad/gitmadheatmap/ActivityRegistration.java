@@ -46,6 +46,8 @@ public class ActivityRegistration extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
     }
 
+    // TODO 2: Before you go on, add a onClick attribute to the button with id register_btn_create_account in activity_registration.xml
+    // The onClick attribute should reference the registerUser button so we can call it when the button is pressed.
     /**
      * Register a new user within our firebase auth instance.
      */
@@ -56,9 +58,9 @@ public class ActivityRegistration extends AppCompatActivity {
         final String firstName = fNameEntry.getText().toString();
         final String lastName = lNameEntry.getText().toString();
 
-        // TODO 2: Create a toast here that will display the user's email.
+        // TODO 3: Create a toast here that will display the user's email.
 
-        // TODO 3: Hey, while we are logging information let's actually log it! Log the user's email as well.
+        // TODO 4: Hey, while we are logging information let's actually log it! Log the user's email as well.
 
         // If the entered credentials by the user are not valid, then prevent them from registering.
         if( !areCredentialsValid() ) {
@@ -69,8 +71,8 @@ public class ActivityRegistration extends AppCompatActivity {
         FbAuth mAuth = new FbAuth();
         mAuth.createNewUser( new User( firstName, lastName, email), password);
 
-        // TODO 4: Start the ActivityUserLoggedIn activity here. No need to pass anything extra.
-        // TODO 4.1 (optional): Bonus points if you lookup intent flags and make it so that when the user presses the back button, they do not come back to this screen (remove back stack).
+        // TODO 5: Start the ActivityUserLoggedIn activity here. No need to pass anything extra.
+        // TODO 5.1 (optional): Bonus points if you lookup intent flags and make it so that when the user presses the back button, they do not come back to this screen (remove back stack).
     }
 
     /**
