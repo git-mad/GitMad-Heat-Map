@@ -38,9 +38,6 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ActivityHeatMap"
-            android:label="@string/title_activity_maps" />
-        <activity
             android:name=".ActivityLogin"
             android:label="LoginActivity">
             <intent-filter>
@@ -53,15 +50,6 @@
             android:name=".ActivityRegistration"
             android:label="@string/title_activity_registration"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <receiver
-            android:name=".AlarmOnBootReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".AlarmCalledReceiver" />
 
         <activity android:name=".ActivityUserLoggedIn"></activity>
     </application>

@@ -22,7 +22,6 @@ public class ActivityRegistration extends AppCompatActivity {
     private EditText fNameEntry;
     private EditText lNameEntry;
     private String email;
-    private String password;
 
     // Firebase
     FirebaseAuth mAuth;
@@ -44,7 +43,6 @@ public class ActivityRegistration extends AppCompatActivity {
         Intent intent = getIntent();
         email = intent.getStringExtra("email");
         emailEntry.setText(email);
-        passwordEntry.setText(password);
 
         // Firebase
         mAuth = FirebaseAuth.getInstance();
@@ -110,9 +108,6 @@ public class ActivityRegistration extends AppCompatActivity {
 
             return false;
         }
-
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
 
         return true;
     }
