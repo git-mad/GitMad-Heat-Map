@@ -1,11 +1,6 @@
 package gitmad.gitmadheatmap;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +27,7 @@ public class ActivityLogin extends AppCompatActivity {
         // Firebase.
         mAuth = new FbAuth();
 
-        // If user is already logged in, transition them to the UserLoggedIn activity
+         // If user is already logged in, transition them to the UserLoggedIn activity
         if( mAuth.isUserLoggedIn() ) {
             transitionToEnterActivity();
         }
@@ -43,25 +38,12 @@ public class ActivityLogin extends AppCompatActivity {
         emailEntry = findViewById(R.id.login_editText_email);
         registerHere = findViewById(R.id.login_btn_register_here);
 
-        registerHere.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = emailEntry.getText().toString();
-                Intent intent = new Intent(view.getContext(), ActivityRegistration.class);
-                intent.putExtra("email", email);
-                startActivity(intent);
-            }
-        });
+        // TODO 1: Create a new OnClickListener for our register button. This button should start the ActivityRegistration Activity.
+        // TODO 1.1 (optional): Pass along the user's email in this intent.
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick( final View view) {
-                String email = emailEntry.getText().toString();
-                String password = passwordEntry.getText().toString();
+        // TODO 5: Create a OnClickListener for our login button.
+        // We will not handle the intent logic here. It is handled in the mAuth class. Look in that class and see what method you should call to transition to the ActivityUserLoggedIn activity.
 
-                mAuth.signUserIn( email, password );
-            }
-        });
     }
 
     /**
@@ -71,7 +53,6 @@ public class ActivityLogin extends AppCompatActivity {
     private void transitionToEnterActivity() {
         Intent intent = new Intent( this, ActivityUserLoggedIn.class );
         intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-        intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
         startActivity( intent );
     }
 

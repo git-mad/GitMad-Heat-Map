@@ -1,8 +1,6 @@
 package gitmad.gitmadheatmap;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -74,36 +72,18 @@ public class FbAuth {
      * @param password The user's password.
      */
     public void signUserIn(String email, String password) {
+        // TODO 6 (advanced): Uncomment the task object. Add a onSuccessListener that will start the ActivityUserLoggedIn Activity.
         // Create new task promise for signing in a user.
-        Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
+//        Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
 
-        task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            /**
-             * Start the UserLoggedIn activity.
-             */
-            public void onSuccess(AuthResult authResult) {
-                Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
-                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
-                MyApp.getContext().startActivity( intent );
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            /**
-             * Notify the user as to why they were unable to login to the app.
-             */
-            public void onFailure(@NonNull Exception e) {
-                switch( ((FirebaseAuthException) e).getErrorCode()) {
-                    case "ERROR_USER_NOT_FOUND":
-                        Toast.makeText( MyApp.getContext(), R.string.auth_user_not_found, Toast.LENGTH_LONG ).show();
-                        break;
-                    case "ERROR_WRONG_PASSWORD":
-                        Toast.makeText( MyApp.getContext(), R.string.auth_password_error, Toast.LENGTH_LONG ).show();
-                        break;
-                }
-            }
-        });
+        // TODO 6.1 (advanced & optional): Bonus points if you lookup intent flags and make it so that when the user presses the back button, they do not come back to this screen (remove back stack).
+
+        // TODO 7 (advanced): Add a onFailureListener for when the event fails. Display a toast when the async onFailureListener is called.
+
+        Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
+        MyApp.getContext().startActivity( intent );
     }
 
     /**

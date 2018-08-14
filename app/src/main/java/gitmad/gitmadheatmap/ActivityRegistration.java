@@ -39,32 +39,26 @@ public class ActivityRegistration extends AppCompatActivity {
         fNameEntry = findViewById(R.id.register_editText_first_name);
         lNameEntry = findViewById(R.id.register_editText_last_name);
 
-        // Set information passed in from previous activity if it exists.
-        Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-        emailEntry.setText(email);
+        // TODO 1.2 (optional): If you passed in the user's email with the intent, grab it here and populate our emailEntry element with the email value.
 
         // Firebase
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerUser();
-            }
-        });
     }
 
     /**
      * Register a new user within our firebase auth instance.
      */
-    public void registerUser() {
+    public void registerUser( View view) {
         // Layout elements.
         final String email = emailEntry.getText().toString();
         final String password = passwordEntry.getText().toString();
         final String firstName = fNameEntry.getText().toString();
         final String lastName = lNameEntry.getText().toString();
+
+        // TODO 2: Create a toast here that will display the user's email.
+
+        // TODO 3: Hey, while we are logging information let's actually log it! Log the user's email as well.
 
         // If the entered credentials by the user are not valid, then prevent them from registering.
         if( !areCredentialsValid() ) {
@@ -75,11 +69,8 @@ public class ActivityRegistration extends AppCompatActivity {
         FbAuth mAuth = new FbAuth();
         mAuth.createNewUser( new User( firstName, lastName, email), password);
 
-        // Start the UserLoggedIn activity.
-        Intent intent = new Intent( this, ActivityUserLoggedIn.class );
-        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-        intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
-        startActivity( intent );
+        // TODO 4: Start the ActivityUserLoggedIn activity here. No need to pass anything extra.
+        // TODO 4.1 (optional): Bonus points if you lookup intent flags and make it so that when the user presses the back button, they do not come back to this screen (remove back stack).
     }
 
     /**
