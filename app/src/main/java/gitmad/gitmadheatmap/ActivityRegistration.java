@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,6 +71,12 @@ public class ActivityRegistration extends AppCompatActivity {
         if( !areCredentialsValid() ) {
             return;
         }
+
+        // Toast to show entered email.
+        Toast.makeText( this, email, Toast.LENGTH_LONG ).show();
+
+        // Log the entered email.
+        Log.i( "email", email );
 
         // Create new user in firebase.
         FbAuth mAuth = new FbAuth();
