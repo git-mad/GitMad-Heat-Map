@@ -6,8 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context="gitmad.gitmadheatmap.ActivityLogin">
 
-
-<TextView
+    <TextView
     android:id="@+id/login_txt_signIn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -29,16 +28,6 @@ tools:context="gitmad.gitmadheatmap.ActivityLogin">
     app:layout_constraintHorizontal_bias="0.498"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
-
-    <TextView
-        android:id="@+id/login_txt_register_here"
-        android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:layout_marginBottom="75dp"
-        android:text="@string/dont_have_account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.design.widget.TextInputLayout
     android:id="@+id/textInputLayout2"
@@ -80,18 +69,15 @@ tools:context="gitmad.gitmadheatmap.ActivityLogin">
 </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/login_btn_register_here"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="enterAppWithoutSigningIn"
-        android:text="@string/no_account_login"
+        android:text="@string/dont_have_account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_txt_register_here" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
