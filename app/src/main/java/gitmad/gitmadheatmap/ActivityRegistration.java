@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,6 @@ public class ActivityRegistration extends AppCompatActivity {
     private EditText fNameEntry;
     private EditText lNameEntry;
     private String email;
-    private String password;
 
     // Firebase
     FirebaseAuth mAuth;
@@ -42,10 +42,8 @@ public class ActivityRegistration extends AppCompatActivity {
 
         // Set information passed in from previous activity if it exists.
         Intent intent = getIntent();
-        email = intent.getStringExtra("enteredUsername");
-        password = intent.getStringExtra("enteredPassword");
+        email = intent.getStringExtra("email");
         emailEntry.setText(email);
-        passwordEntry.setText(password);
 
         // Firebase
         mAuth = FirebaseAuth.getInstance();
@@ -73,6 +71,12 @@ public class ActivityRegistration extends AppCompatActivity {
         if( !areCredentialsValid() ) {
             return;
         }
+
+        // Toast to show entered email.
+        Toast.makeText( this, email, Toast.LENGTH_LONG ).show();
+
+        // Log the entered email.
+        Log.i( "email", email );
 
         // Create new user in firebase.
         FbAuth mAuth = new FbAuth();
@@ -111,9 +115,6 @@ public class ActivityRegistration extends AppCompatActivity {
 
             return false;
         }
-
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
 
         return true;
     }
