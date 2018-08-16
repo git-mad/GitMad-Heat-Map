@@ -52,7 +52,7 @@ public class ActivityLogin extends AppCompatActivity {
         signInButton = findViewById(R.id.login_btn_signIn);
         passwordEntry = findViewById(R.id.login_editText_password);
         emailEntry = findViewById(R.id.login_editText_email);
-        registerHere = findViewById(R.id.login_txt_register_here);
+        registerHere = findViewById(R.id.login_btn_register_here);
 
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
