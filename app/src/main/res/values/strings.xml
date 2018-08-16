@@ -55,4 +55,6 @@
 
     <!-- Intent extra string -->
     <string name="intent_menu_item">MENU_ITEM</string>
+
+    <string name="congrats">Congrats! You are logged in!</string>
 </resources>

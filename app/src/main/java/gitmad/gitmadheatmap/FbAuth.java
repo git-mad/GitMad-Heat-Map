@@ -1,8 +1,6 @@
 package gitmad.gitmadheatmap;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -48,8 +46,6 @@ public class FbAuth {
                 String username = emailToUsername( email );
                 mDatabase.setReferenceValue( "users/" + username, new User( firstName, lastName, username ) );
 
-                // Create local shared preference for user username.
-                setUsernamePreference( username );
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -71,81 +67,23 @@ public class FbAuth {
     }
 
     /**
-     * Create a local username reference.
-     * This will be helpful when our alarm sounds. Instead of creating a new Auth instance, we can just
-     * use this reference instead.
-     * @param username
-     */
-    private void setUsernamePreference( String username ) {
-        SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), username );
-        editor.apply();
-    }
-
-    /**
-     * Remove the username SharedPreference value.
-     * Without the username SharedPreference, we cannot associate a location with a specific user.
-     */
-    private void removeUsernamePreference() {
-        SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove( MyApp.getContext().getString( R.string.pref_user_username) );
-        editor.apply();
-    }
-
-    /**
-     * Retrieve the currently logged in user's username.
-     * @return Current user username.
-     */
-    public String getUserUsername() {
-        if( isUserLoggedIn() ) {
-            String userEmail = mAuth.getCurrentUser().getEmail();
-            return emailToUsername( userEmail );
-        }
-        return "";
-    }
-
-    /**
      * Perform an auth login request to log a user into our app.
      * @param email The user's email.
      * @param password The user's password.
      */
     public void signUserIn(String email, String password) {
-
-        // Set our username preference.
-        setUsernamePreference( emailToUsername( email ) );
-
+        // TODO 7 (advanced): Uncomment the task object. Add a onSuccessListener that will start the ActivityUserLoggedIn Activity.
         // Create new task promise for signing in a user.
-        Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
+//        Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
 
-        task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            /**
-             * Start the UserLoggedIn activity.
-             */
-            public void onSuccess(AuthResult authResult) {
-                Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
-                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
-                MyApp.getContext().startActivity( intent );
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            /**
-             * Notify the user as to why they were unable to login to the app.
-             */
-            public void onFailure(@NonNull Exception e) {
-                switch( ((FirebaseAuthException) e).getErrorCode()) {
-                    case "ERROR_USER_NOT_FOUND":
-                        Toast.makeText( MyApp.getContext(), R.string.auth_user_not_found, Toast.LENGTH_LONG ).show();
-                        break;
-                    case "ERROR_WRONG_PASSWORD":
-                        Toast.makeText( MyApp.getContext(), R.string.auth_password_error, Toast.LENGTH_LONG ).show();
-                        break;
-                }
-            }
-        });
+        // TODO 7.1 (advanced & optional): Bonus points if you lookup intent flags and make it so that when the user presses the back button, they do not come back to this screen (remove back stack).
+
+        // TODO 8 (advanced): Add a onFailureListener for when the event fails. Display a toast when the async onFailureListener is called.
+
+        Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
+        intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
+        MyApp.getContext().startActivity( intent );
     }
 
     /**
@@ -156,9 +94,7 @@ public class FbAuth {
         if( isUserLoggedIn() ) {
             // Sign out from auth instance.
             mAuth.signOut();
-
             // Remove username preference.
-            removeUsernamePreference();
         }
 
         // Return user to login screen.
