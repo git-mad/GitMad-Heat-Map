@@ -14,7 +14,7 @@
         android:name="com.google.android.geo.API_KEY"
         android:value="YOUR_API_KEY"/>
   ```
-  Earlier in the second article above we saw that we created a new way to access our key from a file not being tracked by github. IT IS IMPORTANT that you name the key in the file to `GitmadApp_Key`. We then access that key through our build.gradle file under our `BuildTypes`. It should look something like this:
+  Earlier in the second article above we saw that we created a new way to access our key from a file not being tracked by github. IT IS IMPORTANT that you name the key in the file to `GitmadApp_ApiKey`. We then access that key through our build.gradle file under our `BuildTypes`. It should look something like this:
   
   ```java
       buildTypes {
