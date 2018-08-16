@@ -42,7 +42,7 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".ActivityLogin"
-            android:label="LoginActivity">
+            android:label="Heat Map">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
