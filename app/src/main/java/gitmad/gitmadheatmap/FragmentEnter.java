@@ -1,6 +1,5 @@
 package gitmad.gitmadheatmap;
 
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 
 /**
  * A fragment for our current home screen that allows the user to start and stop the alarm,
@@ -26,8 +24,6 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
     // Layout elements.
     private Button startButton;
     private Button stopButton;
-    private Button mapButton;
-    private Button logoutButton;
 
     public FragmentEnter() {
         // Required empty public constructor
@@ -50,14 +46,10 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
         // Layout elements.
         startButton = getView().findViewById( R.id.enter_btn_start_alarm);
         stopButton = getView().findViewById( R.id.enter_btn_stop_alarm);
-        mapButton = getView().findViewById( R.id.enter_btn_enter_map );
-        logoutButton = getView().findViewById( R.id.enter_btn_logout);
 
         // Attach onClickListeners to class onClick method.
         startButton.setOnClickListener( this );
         stopButton.setOnClickListener( this );
-        mapButton.setOnClickListener( this );
-        logoutButton.setOnClickListener( this );
 
         // This check is used to see if our alarm is already running.
         // It could be running from our receiver that called it once the phone booted up.
@@ -74,28 +66,13 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
      */
     public void onClick( View view ) {
         switch( view.getId() )  {
-            case R.id.enter_btn_enter_map:
-                enter_map_activity();
-                break;
             case R.id.enter_btn_start_alarm:
                 start_alarm();
                 break;
             case R.id.enter_btn_stop_alarm:
                 stop_alarm();
                 break;
-            case R.id.enter_btn_logout:
-                logoutUser();
-                break;
         }
-    }
-
-    /**
-     * Enters the HeatMap activity.
-     */
-    public void enter_map_activity()
-    {
-        Intent intent = new Intent( getActivity(), ActivityHeatMap.class );
-        startActivity( intent );
     }
 
     /**
@@ -144,14 +121,6 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
     private void setAlarmButtons( boolean alarm_on ) {
         startButton.setEnabled( alarm_on );
         stopButton.setEnabled( !alarm_on );
-    }
-
-    /**
-     * Logs the current user out of our auth system and returns them to the login screen.
-     */
-    public void logoutUser() {
-        FbAuth mAuth = new FbAuth();
-        mAuth.signUserOutAndReturnToLogin();
     }
 
 }

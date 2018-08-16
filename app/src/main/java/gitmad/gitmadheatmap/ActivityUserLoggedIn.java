@@ -23,6 +23,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
     // DrawerLayout variables.
     private DrawerLayout mDrawerLayout;
     private Intent drawerIntent;
+    private boolean logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,10 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
     private void setupDrawer() {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+        // Set this to false. We use this boolean later to mark that the user has tried to logout and we should fulfill this request.
+        // This is used similarly to the drawerIntent variable. It prevents lag with the drawer screen.
+        logout = false;
+
         // We initialize this listener mainly for its ability to remove lag when changing activities.
         // By waiting for the drawer to fully close, the animation looks smooth and cleanly executed.
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -72,6 +77,9 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 if( drawerIntent != null) {
                     startActivity( drawerIntent );
+                } else if( logout ) {
+                    FbAuth mAuth = new FbAuth();
+                    mAuth.signUserOutAndReturnToLogin();
                 }
             }
 
@@ -103,6 +111,10 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
                                 Intent intent = new Intent( MyApp.getContext(), ActivityHeatMap.class );
                                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                                 drawerIntent = intent;
+                                break;
+                            case R.id.nav_logout_option:
+                                logout = true;
+                                break;
                         }
 
                         mDrawerLayout.closeDrawers();
