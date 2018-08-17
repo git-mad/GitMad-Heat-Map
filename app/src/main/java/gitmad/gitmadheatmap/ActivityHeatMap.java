@@ -244,8 +244,6 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
 
                         } else {
-//                            Log.d(TAG, "Current location is null. Using defaults.");
-//                            Log.e(TAG, "Exception: %s", task.getException());
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
@@ -304,17 +302,24 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
         // A listener that handles onClicks for menu items in the navigation drawer.
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
+                    Intent intent;
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch( item.getItemId() ) {
                             case R.id.nav_home_option:
-                                Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
+                                intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
                                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                                 intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
                                 drawerIntent = intent;
                                 break;
                             case R.id.nav_logout_option:
                                 logout = true;
+                                break;
+                            case R.id.nav_settings_option:
+                                intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
+                                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_settings_option" );
+                                drawerIntent = intent;
                                 break;
                         }
 

@@ -46,10 +46,13 @@ public class FbAuth {
              */
             public void onSuccess(AuthResult authResult) {
                 String username = emailToUsername( email );
+                User user = new User( firstName, lastName, username );
                 mDatabase.setReferenceValue( "users/" + username, new User( firstName, lastName, username ) );
 
-                // Create local shared preference for user username.
-                setUsernamePreference( username );
+                // Set local shared preferences for user when they create a new account and enter the app.
+                setUserPreferences( user );
+                // Get our user information and then create local shared preference for user username.
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -74,12 +77,17 @@ public class FbAuth {
      * Create a local username reference.
      * This will be helpful when our alarm sounds. Instead of creating a new Auth instance, we can just
      * use this reference instead.
-     * @param username
+     * @param user the user whose credentials we should be saving
      */
-    private void setUsernamePreference( String username ) {
+    private void setUserPreferences( User user ) {
         SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), username );
+
+        // Create preferences
+        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), user.getEmail() );
+        editor.putString( MyApp.getContext().getString( R.string.pref_first_name), user.getFirstName() );
+        editor.putString( MyApp.getContext().getString( R.string.pref_last_name), user.getLastName() );
+
         editor.apply();
     }
 
@@ -90,7 +98,12 @@ public class FbAuth {
     private void removeUsernamePreference() {
         SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove( MyApp.getContext().getString( R.string.pref_user_username) );
+
+        // Remove preferences
+        editor.remove( MyApp.getContext().getString( R.string.pref_user_username ) );
+        editor.remove( MyApp.getContext().getString( R.string.pref_first_name ) );
+        editor.remove( MyApp.getContext().getString( R.string.pref_last_name ) );
+
         editor.apply();
     }
 
@@ -113,8 +126,13 @@ public class FbAuth {
      */
     public void signUserIn(String email, String password) {
 
-        // Set our username preference.
-        setUsernamePreference( emailToUsername( email ) );
+        // Set our preference.
+        mDatabase.getUser( emailToUsername(email), new RetrieveUserCallback() {
+            @Override
+            public void onFinish(User user) {
+                setUserPreferences( user );
+            }
+        });
 
         // Create new task promise for signing in a user.
         Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
