@@ -67,7 +67,7 @@ public class ActivityLogin extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( final View view) {
-                String email = emailEntry.getText().toString();
+                String email = emailEntry.getText().toString().toLowerCase();
                 String password = passwordEntry.getText().toString();
 
                 mAuth.signUserIn( email, password );

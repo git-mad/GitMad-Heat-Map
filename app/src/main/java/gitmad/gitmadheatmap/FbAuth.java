@@ -126,16 +126,7 @@ public class FbAuth {
      * @param email The user's email.
      * @param password The user's password.
      */
-    public void signUserIn(String email, String password) {
-
-        // Set our preference.
-        mDatabase.getUser( emailToUsername(email), new RetrieveUserCallback() {
-            @Override
-            public void onFinish(User user) {
-                setUserPreferences( user );
-            }
-        });
-
+    public void signUserIn( final String email, String password) {
         // Create new task promise for signing in a user.
         Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
 
@@ -145,6 +136,14 @@ public class FbAuth {
              * Start the UserLoggedIn activity.
              */
             public void onSuccess(AuthResult authResult) {
+                // Set our preference.
+                mDatabase.getUser( emailToUsername(email), new RetrieveUserCallback() {
+                    @Override
+                    public void onFinish(User user) {
+                        setUserPreferences( user );
+                    }
+                });
+
                 Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                 intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );

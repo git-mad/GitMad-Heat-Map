@@ -63,7 +63,7 @@ public class ActivityRegistration extends AppCompatActivity {
      */
     public void registerUser() {
         // Layout elements.
-        final String email = emailEntry.getText().toString();
+        final String email = emailEntry.getText().toString().toLowerCase();
         final String password = passwordEntry.getText().toString();
         final String firstName = fNameEntry.getText().toString();
         final String lastName = lNameEntry.getText().toString();
