@@ -59,6 +59,12 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
                         // Send the user's location information to our database.
                         Location mLastKnownLocation;
                         mLastKnownLocation = (Location) task.getResult();
+
+                        // If lastKnownLocation is null ( usually happens on emulator ) return to avoid error.
+                        if( mLastKnownLocation == null ) {
+                            return;
+                        }
+                        // Get the coordinates of the current position.
                         LatLng mCoordinates = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                         FbDatabase mDatabase = new FbDatabase();
 

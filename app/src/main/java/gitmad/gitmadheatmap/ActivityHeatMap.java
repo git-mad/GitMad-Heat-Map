@@ -239,6 +239,13 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = (Location) task.getResult();
+
+                            // If lastKnownLocation is null ( usually happens on emulator ) return to avoid error.
+                            if( mLastKnownLocation == null ) {
+                                return;
+                            }
+
+                            // Move the camera to the desired position
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
