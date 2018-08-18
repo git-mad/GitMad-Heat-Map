@@ -66,6 +66,12 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
                         }
                         // Get the coordinates of the current position.
                         LatLng mCoordinates = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+
+                        // If the coordinates passed through are not valid, then return and do not store the values in Firebase.
+                        // If you don't want this limit and want to allow anyone to be seen anywhere, comment this out.
+                        if( !isValidLatLng( mCoordinates ) ) {
+                            return;
+                        }
                         FbDatabase mDatabase = new FbDatabase();
 
                         // Get the user's username.
@@ -92,5 +98,28 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
         userId = sharedPreferences.getString( MyApp.getContext().getString( R.string.pref_user_id ), null );
 
         return userId;
+    }
+
+    /**
+     * Determines if the passed in coordinates are valid (within the bounds of Georgia Tech).
+     * @param mCoordinates The user's last known location.
+     * @return true if the user is on Georgia Tech's campus, or false otherwise.
+     */
+    private boolean isValidLatLng( LatLng mCoordinates ) {
+        // Coordinates for the main campus.
+        if( mCoordinates.latitude <= 33.781492 && mCoordinates.latitude >= 33.768365 ) {
+            if( mCoordinates.longitude >= -84.407467 && mCoordinates.longitude <= -84.390811 ) {
+                return true;
+            }
+        }
+
+        // Coordinates for the Tech Square.
+        if( mCoordinates.latitude <= 33.777781 && mCoordinates.latitude >= 33.775855 ) {
+            if( mCoordinates.longitude >= -84.390505 && mCoordinates.longitude <= -84.387356 ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
