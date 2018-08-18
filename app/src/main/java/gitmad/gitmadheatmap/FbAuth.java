@@ -45,9 +45,9 @@ public class FbAuth {
              * NOTE: Do not ever store someone's password. That is something not even our eyes deserve to see.
              */
             public void onSuccess(AuthResult authResult) {
-                String username = emailToUsername( email );
-                User user = new User( firstName, lastName, username );
-                mDatabase.setReferenceValue( "users/" + username, new User( firstName, lastName, username ) );
+                User user = new User( firstName, lastName, email );
+
+                mDatabase.setReferenceValue( "users/" + user.getUsername(), user );
 
                 // Set local shared preferences for user when they create a new account and enter the app.
                 setUserPreferences( user );
@@ -84,7 +84,8 @@ public class FbAuth {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         // Create preferences
-        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), user.getEmail() );
+        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), user.getUsername() );
+        editor.putString( MyApp.getContext().getString( R.string.pref_user_email), user.getEmail() );
         editor.putString( MyApp.getContext().getString( R.string.pref_first_name), user.getFirstName() );
         editor.putString( MyApp.getContext().getString( R.string.pref_last_name), user.getLastName() );
 
@@ -103,6 +104,7 @@ public class FbAuth {
         editor.remove( MyApp.getContext().getString( R.string.pref_user_username ) );
         editor.remove( MyApp.getContext().getString( R.string.pref_first_name ) );
         editor.remove( MyApp.getContext().getString( R.string.pref_last_name ) );
+        editor.remove( MyApp.getContext().getString( R.string.pref_user_email ) );
 
         editor.apply();
     }
@@ -194,6 +196,16 @@ public class FbAuth {
         int at_location = email.indexOf( '@' );
         return email.substring( 0, at_location );
     }
+
+//    /**
+//     * Converts a user's email into an username.
+//     * @param email A email address.
+//     * @return The username that would be associated with the email.
+//     */
+//    private String makeEmailSafeForFB( String email ) {
+//        int at_location = email.indexOf( '@' );
+//        return email.substring( 0, at_location ) + "::" + email.substring( at_location + 1, email.length() );
+//    }
 
     /**
      * Indicates if a user is logged in.

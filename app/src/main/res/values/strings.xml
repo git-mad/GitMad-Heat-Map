@@ -49,6 +49,7 @@
     <string name="pref_user_username">username</string>
     <string name="pref_first_name">first name</string>
     <string name="pref_last_name">last name</string>
+    <string name="pref_user_email">email</string>
 
     <!-- Strings related to Registration Exceptions -->
     <string name="reg_invalid_email">There must be an "@" sign in your email</string>
