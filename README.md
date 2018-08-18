@@ -49,6 +49,7 @@ After doing this your api key should be linked and you should be able to use the
     <li>Enter into the project. You will know when you do this once you see "Authentication", "Database", "Storage", and more on the left side of the screen. If you are having trouble entering into the project you can try clicking the Firebase logo in the top left and then clicking on the project.</li>
     <li>Click and enter the "Authentication" section. Click on the "Sign-In tab" (within the authentication section) and then enable email and password.</li>
     <li>Click and enter the "Database" section. Create a new database. Select test mode.</li>
+    <li>Make sure to go to the "Realtime Database", click rules, and make sure that both read and write are set to true.</li>
     <p>That should be everything we need to do on Firebase. Now we are going to actually link it to the project.</p>
     <li>In Android Studio click on "Tools" in the toolbar and within the dropdown select "Firebase". A sidebar should appear on the right side of the screen.</li>
     <li>Click on the dropdown arrow for "Realtime Database" and then "Save and retrieve data".</li>
@@ -62,17 +63,12 @@ After doing this your api key should be linked and you should be able to use the
   
 <div>
   <h3>These are things that I think we could add quickly that would help out a lot:</h3>
-    <h4>Add user account information to the nagivation drawer.</h4>
-    <p>This one is pretty straight to the point. Add a fragment for this and add a link in the navigation drawer.</p>
-  </div>
-  <div>
-    <h4>Remove log out button from the home screen and place it in the navigation drawer.</h4>
-    <p>UI wise this may look better being at the bottom of the drawer, but I am not sure if material design has anything to say about this. I would look through the material design standards first and do what it says. If it does not have anything then I would see if you can implement one at the bottom and on in the menu item list and just see which looks better.</p>
-    <p>Remember there are two instances of the nav drawer (one in the UserLoggedIn activity and one in the HeatMap activity) so add them in both instances.</p>
-  </div>
    <div>
     <h4>Write a script to auto-remove location instances.</h4>
     <p>This will most likely be ran from some hosting service like heroku. Ask Lucas if you have any questions.</p>
   </div>
+  <div>
+    <h4>Add friends</h4>
+    <p>I would give each individual person a unique key that is generated when they first create an account (to be honest you could use their user_id) and upload that to Firebase. Then if they wanted to add a friend they could add the id to their app and this would allow them to see their friend's location on the map. This will take a good amount of time and effort.</p>
 </div>
  
