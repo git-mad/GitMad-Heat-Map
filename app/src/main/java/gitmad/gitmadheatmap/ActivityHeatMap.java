@@ -161,6 +161,12 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
                 .gradient(gradient)
                 .build();
 
+        // Set the radius of each data location (can choose between 10 and 50, 20 is default).
+//        mProvider.setRadius( 20 );
+
+        // Set the opacity of each data location (can choose between 0 and 1, 0.7 is default).
+        mProvider.setOpacity( 0.6f );
+
         // Add the tile overlay to the map.
         mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
