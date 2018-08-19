@@ -23,6 +23,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
     // DrawerLayout variables.
     private DrawerLayout mDrawerLayout;
     private Intent drawerIntent;
+    private boolean logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,10 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
     private void setupDrawer() {
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
+        // Set this to false. We use this boolean later to mark that the user has tried to logout and we should fulfill this request.
+        // This is used similarly to the drawerIntent variable. It prevents lag with the drawer screen.
+        logout = false;
+
         // We initialize this listener mainly for its ability to remove lag when changing activities.
         // By waiting for the drawer to fully close, the animation looks smooth and cleanly executed.
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -72,6 +77,9 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 if( drawerIntent != null) {
                     startActivity( drawerIntent );
+                } else if( logout ) {
+                    FbAuth mAuth = new FbAuth();
+                    mAuth.signUserOutAndReturnToLogin();
                 }
             }
 
@@ -89,11 +97,14 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         // A listener that handles onClicks for menu items in the navigation drawer.
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
+
+                    FragmentTransaction fragmentTransaction;
+
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch( item.getItemId() ) {
                             case R.id.nav_home_option:
-                                FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                                fragmentTransaction = mFragmentManager.beginTransaction();
 
                                 FragmentEnter fragmentEnter = new FragmentEnter();
                                 fragmentTransaction.replace( R.id.loggedIn_frame_fragment_container, fragmentEnter );
@@ -103,6 +114,17 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
                                 Intent intent = new Intent( MyApp.getContext(), ActivityHeatMap.class );
                                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                                 drawerIntent = intent;
+                                break;
+                            case R.id.nav_settings_option:
+                                fragmentTransaction = mFragmentManager.beginTransaction();
+
+                                FragmentSettings fragmentSettings = new FragmentSettings();
+                                fragmentTransaction.replace( R.id.loggedIn_frame_fragment_container, fragmentSettings );
+                                fragmentTransaction.commit();
+                                break;
+                            case R.id.nav_logout_option:
+                                logout = true;
+                                break;
                         }
 
                         mDrawerLayout.closeDrawers();
@@ -135,6 +157,8 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         switch( selectedMenuItem ) {
             case "nav_home_option":
                 return R.id.nav_home_option;
+            case "nav_settings_option":
+                return R.id.nav_settings_option;
         }
 
         return R.id.nav_home_option;
@@ -143,6 +167,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
     /**
      * Obtains the drawer menu item selected (passed from previous activity) and returns the fragment
      * that should be loaded based on that value.
+     * This method is used for when the user is coming from the HeatMap activity. Otherwise we will load the enter fragment.
      * @return The fragment that should be loaded within this activity.
      */
     private Fragment getFragmentToBeDisplayed() {
@@ -150,6 +175,8 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         switch( selectedMenuItem ) {
             case "nav_home_option":
                 return new FragmentEnter();
+            case "nav_settings_option":
+                return new FragmentSettings();
         }
 
         return new FragmentEnter();

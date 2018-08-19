@@ -7,18 +7,6 @@
     tools:context=".FragmentEnter">
 
     <Button
-        android:id="@+id/enter_btn_enter_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/btn_enter_map"
-        app:layout_constraintBottom_toTopOf="@+id/enter_btn_start_alarm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/enter_btn_start_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,16 +48,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_btn_stop_alarm" />
 
-    <Button
-        android:id="@+id/enter_btn_logout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:background="?attr/colorError"
-        android:text="@string/logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

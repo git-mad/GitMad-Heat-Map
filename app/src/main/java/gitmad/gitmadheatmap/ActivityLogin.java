@@ -52,7 +52,7 @@ public class ActivityLogin extends AppCompatActivity {
         signInButton = findViewById(R.id.login_btn_signIn);
         passwordEntry = findViewById(R.id.login_editText_password);
         emailEntry = findViewById(R.id.login_editText_email);
-        registerHere = findViewById(R.id.login_txt_register_here);
+        registerHere = findViewById(R.id.login_btn_register_here);
 
         registerHere.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +67,7 @@ public class ActivityLogin extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( final View view) {
-                String email = emailEntry.getText().toString();
+                String email = emailEntry.getText().toString().toLowerCase();
                 String password = passwordEntry.getText().toString();
 
                 mAuth.signUserIn( email, password );

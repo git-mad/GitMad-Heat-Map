@@ -45,11 +45,14 @@ public class FbAuth {
              * NOTE: Do not ever store someone's password. That is something not even our eyes deserve to see.
              */
             public void onSuccess(AuthResult authResult) {
-                String username = emailToUsername( email );
-                mDatabase.setReferenceValue( "users/" + username, new User( firstName, lastName, username ) );
+                User user = new User( firstName, lastName, email );
 
-                // Create local shared preference for user username.
-                setUsernamePreference( username );
+                mDatabase.setReferenceValue( "users/" + user.getUsername(), user );
+
+                // Set local shared preferences for user when they create a new account and enter the app.
+                setUserPreferences( user );
+                // Get our user information and then create local shared preference for user username.
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -74,12 +77,18 @@ public class FbAuth {
      * Create a local username reference.
      * This will be helpful when our alarm sounds. Instead of creating a new Auth instance, we can just
      * use this reference instead.
-     * @param username
+     * @param user the user whose credentials we should be saving
      */
-    private void setUsernamePreference( String username ) {
+    private void setUserPreferences( User user ) {
         SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), username );
+
+        // Create preferences
+        editor.putString( MyApp.getContext().getString( R.string.pref_user_username ), user.getUsername() );
+        editor.putString( MyApp.getContext().getString( R.string.pref_user_email), user.getEmail() );
+        editor.putString( MyApp.getContext().getString( R.string.pref_first_name), user.getFirstName() );
+        editor.putString( MyApp.getContext().getString( R.string.pref_last_name), user.getLastName() );
+
         editor.apply();
     }
 
@@ -90,7 +99,13 @@ public class FbAuth {
     private void removeUsernamePreference() {
         SharedPreferences sharedPreferences = MyApp.getContext().getSharedPreferences( MyApp.getContext().getString( R.string.pref_preferences ), Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove( MyApp.getContext().getString( R.string.pref_user_username) );
+
+        // Remove preferences
+        editor.remove( MyApp.getContext().getString( R.string.pref_user_username ) );
+        editor.remove( MyApp.getContext().getString( R.string.pref_first_name ) );
+        editor.remove( MyApp.getContext().getString( R.string.pref_last_name ) );
+        editor.remove( MyApp.getContext().getString( R.string.pref_user_email ) );
+
         editor.apply();
     }
 
@@ -111,11 +126,7 @@ public class FbAuth {
      * @param email The user's email.
      * @param password The user's password.
      */
-    public void signUserIn(String email, String password) {
-
-        // Set our username preference.
-        setUsernamePreference( emailToUsername( email ) );
-
+    public void signUserIn( final String email, String password) {
         // Create new task promise for signing in a user.
         Task<AuthResult> task = mAuth.signInWithEmailAndPassword( email, password );
 
@@ -125,6 +136,14 @@ public class FbAuth {
              * Start the UserLoggedIn activity.
              */
             public void onSuccess(AuthResult authResult) {
+                // Set our preference.
+                mDatabase.getUser( emailToUsername(email), new RetrieveUserCallback() {
+                    @Override
+                    public void onFinish(User user) {
+                        setUserPreferences( user );
+                    }
+                });
+
                 Intent intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
                 intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                 intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
@@ -176,6 +195,16 @@ public class FbAuth {
         int at_location = email.indexOf( '@' );
         return email.substring( 0, at_location );
     }
+
+//    /**
+//     * Converts a user's email into an username.
+//     * @param email A email address.
+//     * @return The username that would be associated with the email.
+//     */
+//    private String makeEmailSafeForFB( String email ) {
+//        int at_location = email.indexOf( '@' );
+//        return email.substring( 0, at_location ) + "::" + email.substring( at_location + 1, email.length() );
+//    }
 
     /**
      * Indicates if a user is logged in.

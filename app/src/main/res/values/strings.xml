@@ -28,8 +28,12 @@
     <!-- Strings related to registration -->
     <string name="create_account">Create a new account</string>
     <string name="first_name">First Name</string>
+    <string name="first_name_colon">First Name:</string>
     <string name="middle_name">Middle Name</string>
     <string name="last_name">Last Name</string>
+    <string name="last_name_colon">Last Name:</string>
+    <string name="name_colon">Name:</string>
+    <string name="email_colon">Email:</string>
     <string name="register">Register</string>
     <string name="logout">Logout</string>
 
@@ -43,6 +47,9 @@
     <string name="pref_preferences">preferences</string>
     <string name="pref_user_id">userId</string>
     <string name="pref_user_username">username</string>
+    <string name="pref_first_name">first name</string>
+    <string name="pref_last_name">last name</string>
+    <string name="pref_user_email">email</string>
 
     <!-- Strings related to Registration Exceptions -->
     <string name="reg_invalid_email">There must be an "@" sign in your email</string>
@@ -52,7 +59,9 @@
     <!-- Navigation header strings -->
     <string name="nav_home_option">Home</string>
     <string name="nav_map_option">Map</string>
+    <string name="nav_settings_option">Settings</string>
 
     <!-- Intent extra string -->
     <string name="intent_menu_item">MENU_ITEM</string>
+
 </resources>
