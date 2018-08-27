@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".FragmentSettings">
 
-
     <TextView
         android:id="@+id/settings_text_full_name"
         android:layout_width="wrap_content"

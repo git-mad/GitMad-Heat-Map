@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="gitmad.gitmadheatmap.ActivityLogin">
 
-
     <TextView
         android:id="@+id/login_txt_signIn"
         android:layout_width="wrap_content"
