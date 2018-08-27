@@ -1,19 +1,21 @@
 package gitmad.gitmadheatmap;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import gitmad.gitmadheatmap.firebase.FbAuth;
 
 public class ActivityUserLoggedIn extends AppCompatActivity {
 
@@ -35,19 +37,19 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
 
         // Set the fragment that the activity initializes to.
-        fragmentTransaction.add( R.id.loggedIn_frame_fragment_container, getFragmentToBeDisplayed() );
+        fragmentTransaction.add(R.id.loggedIn_frame_fragment_container, getFragmentToBeDisplayed());
         fragmentTransaction.commit();
 
         // Manage DrawerLayout
         setupDrawer();
 
         // Setup toolbar
-        Toolbar toolbar = findViewById( R.id.loggedIn_toolbar );
-        setSupportActionBar( toolbar );
-        getSupportActionBar().setDisplayShowTitleEnabled( false );
+        Toolbar toolbar = findViewById(R.id.loggedIn_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled( true );
-        actionBar.setHomeAsUpIndicator( R.drawable.ic_menu_icon );
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_icon);
     }
 
     /**
@@ -75,9 +77,9 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                if( drawerIntent != null) {
-                    startActivity( drawerIntent );
-                } else if( logout ) {
+                if (drawerIntent != null) {
+                    startActivity(drawerIntent);
+                } else if (logout) {
                     FbAuth mAuth = new FbAuth();
                     mAuth.signUserOutAndReturnToLogin();
                 }
@@ -89,10 +91,10 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
             }
         });
 
-        NavigationView navigationView = findViewById( R.id.nav_view );
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         // Set the current fragment as the selected item in our nav menu.
-        navigationView.setCheckedItem( getMenuItemSelected() );
+        navigationView.setCheckedItem(getMenuItemSelected());
 
         // A listener that handles onClicks for menu items in the navigation drawer.
         navigationView.setNavigationItemSelectedListener(
@@ -102,24 +104,24 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
 
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch( item.getItemId() ) {
+                        switch (item.getItemId()) {
                             case R.id.nav_home_option:
                                 fragmentTransaction = mFragmentManager.beginTransaction();
 
                                 FragmentEnter fragmentEnter = new FragmentEnter();
-                                fragmentTransaction.replace( R.id.loggedIn_frame_fragment_container, fragmentEnter );
+                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, fragmentEnter);
                                 fragmentTransaction.commit();
                                 break;
                             case R.id.nav_map_option:
-                                Intent intent = new Intent( MyApp.getContext(), ActivityHeatMap.class );
-                                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                                Intent intent = new Intent(AppContext.getContext(), ActivityHeatMap.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 drawerIntent = intent;
                                 break;
                             case R.id.nav_settings_option:
                                 fragmentTransaction = mFragmentManager.beginTransaction();
 
                                 FragmentSettings fragmentSettings = new FragmentSettings();
-                                fragmentTransaction.replace( R.id.loggedIn_frame_fragment_container, fragmentSettings );
+                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, fragmentSettings);
                                 fragmentTransaction.commit();
                                 break;
                             case R.id.nav_logout_option:
@@ -138,23 +140,24 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
     /**
      * Handles all toolbar interactions.
      */
-    public boolean onOptionsItemSelected( MenuItem item ) {
-        switch( item.getItemId() ) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer( GravityCompat.START );
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 
-        return super.onOptionsItemSelected( item );
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * Obtains the drawer menu item selected (passed from previous activity) and returns that value.
+     *
      * @return The int value for the id for the menu item we want to be selected.
      */
     private int getMenuItemSelected() {
-        String selectedMenuItem = getIntent().getStringExtra( Integer.toString( R.string.intent_menu_item ) );
-        switch( selectedMenuItem ) {
+        String selectedMenuItem = getIntent().getStringExtra(Integer.toString(R.string.intent_menu_item));
+        switch (selectedMenuItem) {
             case "nav_home_option":
                 return R.id.nav_home_option;
             case "nav_settings_option":
@@ -168,11 +171,12 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
      * Obtains the drawer menu item selected (passed from previous activity) and returns the fragment
      * that should be loaded based on that value.
      * This method is used for when the user is coming from the HeatMap activity. Otherwise we will load the enter fragment.
+     *
      * @return The fragment that should be loaded within this activity.
      */
     private Fragment getFragmentToBeDisplayed() {
-        String selectedMenuItem = getIntent().getStringExtra( Integer.toString( R.string.intent_menu_item ) );
-        switch( selectedMenuItem ) {
+        String selectedMenuItem = getIntent().getStringExtra(Integer.toString(R.string.intent_menu_item));
+        switch (selectedMenuItem) {
             case "nav_home_option":
                 return new FragmentEnter();
             case "nav_settings_option":

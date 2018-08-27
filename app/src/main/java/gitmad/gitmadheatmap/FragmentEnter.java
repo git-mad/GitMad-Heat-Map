@@ -30,8 +30,8 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState ) {
-        super.onCreate( savedInstanceState );
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -42,21 +42,21 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onViewCreated( View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         // Layout elements.
-        startButton = getView().findViewById( R.id.enter_btn_start_alarm);
-        stopButton = getView().findViewById( R.id.enter_btn_stop_alarm);
+        startButton = getView().findViewById(R.id.enter_btn_start_alarm);
+        stopButton = getView().findViewById(R.id.enter_btn_stop_alarm);
 
         // Attach onClickListeners to class onClick method.
-        startButton.setOnClickListener( this );
-        stopButton.setOnClickListener( this );
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
 
         // This check is used to see if our alarm is already running.
         // It could be running from our receiver that called it once the phone booted up.
-        if( isAlarmOn() ) {
-            setAlarmButtons( false );
+        if (isAlarmOn()) {
+            setAlarmButtons(false);
         } else {
-            setAlarmButtons( true );
+            setAlarmButtons(true);
         }
     }
 
@@ -64,8 +64,8 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
     /**
      * OnClick handler for buttons in this fragment.
      */
-    public void onClick( View view ) {
-        switch( view.getId() )  {
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.enter_btn_start_alarm:
                 start_alarm();
                 break;
@@ -78,15 +78,14 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
     /**
      * Starts an instance of the alarmManager for getting the user's location.
      */
-    public void start_alarm()
-    {
-        alarmManager = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
-        Intent alarmIntent = new Intent( getActivity(), AlarmCalledReceiver.class);
+    public void start_alarm() {
+        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        Intent alarmIntent = new Intent(getActivity(), AlarmCalledReceiver.class);
 
-        pendingIntent = PendingIntent.getBroadcast( getActivity().getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT );
-        alarmManager.setInexactRepeating( AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 5000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+        pendingIntent = PendingIntent.getBroadcast(getActivity().getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 5000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
 
-        setAlarmButtons( false );
+        setAlarmButtons(false);
 
     }
 
@@ -94,33 +93,35 @@ public class FragmentEnter extends Fragment implements View.OnClickListener {
      * Stops an instance of the alarmManager for getting the user's location.
      */
     public void stop_alarm() {
-        alarmManager = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
-        Intent alarmIntent = new Intent( getActivity(), AlarmCalledReceiver.class);
+        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        Intent alarmIntent = new Intent(getActivity(), AlarmCalledReceiver.class);
 
-        pendingIntent = PendingIntent.getBroadcast( getActivity(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT );
-        alarmManager.cancel( pendingIntent );
-        startButton.setEnabled( true );
-        stopButton.setEnabled( false );
-        setAlarmButtons( true );
+        pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        startButton.setEnabled(true);
+        stopButton.setEnabled(false);
+        setAlarmButtons(true);
     }
 
     /**
      * Checks if there is a current instance of an alarmManager.
+     *
      * @return true if there is a current instance of the alarmManager, false otherwise.
      */
     public boolean isAlarmOn() {
-        return PendingIntent.getBroadcast( getActivity(), 0, new Intent( getActivity(), AlarmCalledReceiver.class ), PendingIntent.FLAG_NO_CREATE ) != null;
+        return PendingIntent.getBroadcast(getActivity(), 0, new Intent(getActivity(), AlarmCalledReceiver.class), PendingIntent.FLAG_NO_CREATE) != null;
     }
 
     // If true, set the start alarm button to enable and the stop alarm button to false.
 
     /**
      * Enables and disables our start and stop button depending on if the alarm is currently on.
+     *
      * @param alarm_on If true, set the start alarm button to enable and the stop alarm button to false.
      */
-    private void setAlarmButtons( boolean alarm_on ) {
-        startButton.setEnabled( alarm_on );
-        stopButton.setEnabled( !alarm_on );
+    private void setAlarmButtons(boolean alarm_on) {
+        startButton.setEnabled(alarm_on);
+        stopButton.setEnabled(!alarm_on);
     }
 
 }

@@ -7,14 +7,12 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ActivityUserLoggedIn"
-
-        >
+        android:orientation="vertical"
+        tools:context=".ActivityUserLoggedIn">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/loggedIn_toolbar"
@@ -26,8 +24,7 @@
         <FrameLayout
             android:id="@+id/loggedIn_frame_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -38,8 +35,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer_view"
-        app:headerLayout="@layout/nav_header"/>
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view" />
 
 </android.support.v4.widget.DrawerLayout>
 
