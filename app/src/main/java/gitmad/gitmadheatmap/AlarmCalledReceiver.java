@@ -61,26 +61,26 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
                         // Send the user's location information to our database.
-                        Location mLastKnownLocation;
-                        mLastKnownLocation = (Location) task.getResult();
+                        Location lastKnownLocation;
+                        lastKnownLocation = (Location) task.getResult();
 
                         // If lastKnownLocation is null ( usually happens on emulator ) return to avoid error.
-                        if (mLastKnownLocation == null) {
+                        if (lastKnownLocation == null) {
                             return;
                         }
                         // Get the coordinates of the current position.
-                        LatLng mCoordinates = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                        LatLng coordinates = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
 
                         // If the coordinates passed through are not valid, then return and do not store the values in Firebase.
                         // If you don't want this limit and want to allow anyone to be seen anywhere, comment this out.
-                        if (!isValidLatLng(mCoordinates)) {
+                        if (!isValidLatLng(coordinates)) {
                             return;
                         }
-                        FbDatabase mDatabase = new FbDatabase();
+                        FbDatabase database = new FbDatabase();
 
                         // Get the user's username.
                         String username = retrieveUsername();
-                        mDatabase.addLocation(new LocationInformation(mCoordinates, username));
+                        database.addLocation(new LocationInformation(coordinates, username));
                     }
                 }
             });

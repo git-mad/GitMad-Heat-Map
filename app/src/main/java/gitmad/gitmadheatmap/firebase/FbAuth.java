@@ -204,8 +204,7 @@ public class FbAuth {
      * @return The username that would be associated with the email.
      */
     private String emailToUsername(String email) {
-        int at_location = email.indexOf('@');
-        return email.substring(0, at_location);
+        return email.substring(0, email.indexOf('@'));
     }
 
 //    /**
@@ -224,9 +223,6 @@ public class FbAuth {
      * @return true if the user is currently logged into the auth, false otherwise.
      */
     public boolean isUserLoggedIn() {
-        if (auth.getCurrentUser() != null) {
-            return true;
-        }
-        return false;
+        return auth.getCurrentUser() != null;
     }
 }

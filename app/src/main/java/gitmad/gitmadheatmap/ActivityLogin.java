@@ -42,7 +42,7 @@ public class ActivityLogin extends AppCompatActivity {
         // We should test to see if our alarm is on as soon as someone enters the app,
         // and turn on the alarm if it is off.
         if (!isAlarmOn()) {
-            start_alarm();
+            startAlarm();
         }
 
         // If user is already logged in, transition them to the UserLoggedIn activity
@@ -104,9 +104,7 @@ public class ActivityLogin extends AppCompatActivity {
      */
     private String getUserPrefId() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.pref_preferences), Context.MODE_PRIVATE);
-        String userId = sharedPreferences.getString(getString(R.string.pref_user_id), null);
-
-        return userId;
+        return sharedPreferences.getString(getString(R.string.pref_user_id), null);
     }
 
     /**
@@ -138,7 +136,7 @@ public class ActivityLogin extends AppCompatActivity {
     /**
      * Starts an instance of the alarmManager for getting the user's location.
      */
-    public void start_alarm() {
+    public void startAlarm() {
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(this, AlarmCalledReceiver.class);
 

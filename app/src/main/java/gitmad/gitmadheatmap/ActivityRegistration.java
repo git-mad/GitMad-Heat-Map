@@ -18,7 +18,7 @@ import gitmad.gitmadheatmap.model.User;
 
 public class ActivityRegistration extends AppCompatActivity {
 
-    private Button registerButton;
+    private Button register;
     private EditText passwordEntry;
     private EditText emailEntry;
     private EditText fNameEntry;
@@ -36,7 +36,7 @@ public class ActivityRegistration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         // Layout elements.
-        registerButton = findViewById(R.id.register_btn_create_account);
+        register = findViewById(R.id.register_btn_create_account);
         passwordEntry = findViewById(R.id.register_editText_password);
         emailEntry = findViewById(R.id.register_editText_email);
         fNameEntry = findViewById(R.id.register_editText_first_name);
@@ -52,7 +52,7 @@ public class ActivityRegistration extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerUser();
@@ -76,8 +76,8 @@ public class ActivityRegistration extends AppCompatActivity {
         }
 
         // Create new user in firebase.
-        FbAuth mAuth = new FbAuth();
-        mAuth.createNewUser(new User(firstName, lastName, email), password);
+        FbAuth auth = new FbAuth();
+        auth.createNewUser(new User(firstName, lastName, email), password);
 
         // Start the UserLoggedIn activity.
         Intent intent = new Intent(this, ActivityUserLoggedIn.class);

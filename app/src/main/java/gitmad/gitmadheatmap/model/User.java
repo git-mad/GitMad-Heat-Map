@@ -20,13 +20,11 @@ public class User {
 //    private boolean nameVisible;
 
     public User(String firstName, String lastName, String email) {
-
         this.email = email;
         this.username = emailToUsername(email);
         this.firstName = firstName;
         this.lastName = lastName;
         this.joinDate = Calendar.getInstance().getTime();
-
     }
 
     public String getEmail() {
@@ -56,10 +54,7 @@ public class User {
      * @return The username that would be associated with the email.
      */
     private String emailToUsername(String email) {
-        int at_location = email.indexOf('@');
-        return email.substring(0, at_location);
+        return email.substring(0, email.indexOf('@'));
     }
 
 }
-
-

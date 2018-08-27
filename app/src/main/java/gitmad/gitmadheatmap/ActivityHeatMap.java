@@ -277,12 +277,10 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                //
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                //
             }
 
             @Override
@@ -297,7 +295,6 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                //
             }
         });
 

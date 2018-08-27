@@ -16,11 +16,12 @@ import android.widget.TextView;
  */
 public class FragmentSettings extends Fragment {
 
+    private TextView tvFullName;
+    private TextView tvEmail;
 
-    public FragmentSettings() {
-        // Required empty public constructor
+    public static FragmentSettings newInstance() {
+        return new FragmentSettings();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,8 +35,8 @@ public class FragmentSettings extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView txt_view_full_name = view.findViewById(R.id.settings_text_full_name);
-        TextView txt_view_email = view.findViewById(R.id.settings_text_email);
+        tvFullName = view.findViewById(R.id.settings_text_full_name);
+        tvEmail = view.findViewById(R.id.settings_text_email);
 
         // Get username from shared preferences.
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(getString(R.string.pref_preferences), Context.MODE_PRIVATE);
@@ -44,8 +45,8 @@ public class FragmentSettings extends Fragment {
         String email = sharedPreferences.getString(getString(R.string.pref_user_email), null);
         String fullName = firstName + " " + lastName;
 
-        txt_view_full_name.setText(fullName);
-        txt_view_email.setText(email);
+        tvFullName.setText(fullName);
+        tvEmail.setText(email);
     }
 
 }

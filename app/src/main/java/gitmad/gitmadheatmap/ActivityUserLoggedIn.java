@@ -20,10 +20,10 @@ import gitmad.gitmadheatmap.firebase.FbAuth;
 public class ActivityUserLoggedIn extends AppCompatActivity {
 
     // Fragment variables.
-    private FragmentManager mFragmentManager;
+    private FragmentManager fragmentManager;
 
     // DrawerLayout variables.
-    private DrawerLayout mDrawerLayout;
+    private DrawerLayout drawerLayout;
     private Intent drawerIntent;
     private boolean logout;
 
@@ -33,8 +33,8 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         setContentView(R.layout.activity_user_logged_in);
 
         // Manage fragment setup
-        mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         // Set the fragment that the activity initializes to.
         fragmentTransaction.add(R.id.loggedIn_frame_fragment_container, getFragmentToBeDisplayed());
@@ -56,7 +56,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
      * Add DrawerLayout listener and add navigation view listener.
      */
     private void setupDrawer() {
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         // Set this to false. We use this boolean later to mark that the user has tried to logout and we should fulfill this request.
         // This is used similarly to the drawerIntent variable. It prevents lag with the drawer screen.
@@ -64,15 +64,13 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
 
         // We initialize this listener mainly for its ability to remove lag when changing activities.
         // By waiting for the drawer to fully close, the animation looks smooth and cleanly executed.
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                //
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                //
             }
 
             @Override
@@ -80,14 +78,13 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
                 if (drawerIntent != null) {
                     startActivity(drawerIntent);
                 } else if (logout) {
-                    FbAuth mAuth = new FbAuth();
-                    mAuth.signUserOutAndReturnToLogin();
+                    FbAuth auth = new FbAuth();
+                    auth.signUserOutAndReturnToLogin();
                 }
             }
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                //
             }
         });
 
@@ -106,9 +103,9 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.nav_home_option:
-                                fragmentTransaction = mFragmentManager.beginTransaction();
+                                fragmentTransaction = fragmentManager.beginTransaction();
 
-                                FragmentEnter fragmentEnter = new FragmentEnter();
+                                FragmentEnter fragmentEnter = FragmentEnter.newInstance();
                                 fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, fragmentEnter);
                                 fragmentTransaction.commit();
                                 break;
@@ -118,9 +115,9 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
                                 drawerIntent = intent;
                                 break;
                             case R.id.nav_settings_option:
-                                fragmentTransaction = mFragmentManager.beginTransaction();
+                                fragmentTransaction = fragmentManager.beginTransaction();
 
-                                FragmentSettings fragmentSettings = new FragmentSettings();
+                                FragmentSettings fragmentSettings = FragmentSettings.newInstance();
                                 fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, fragmentSettings);
                                 fragmentTransaction.commit();
                                 break;
@@ -129,7 +126,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
                                 break;
                         }
 
-                        mDrawerLayout.closeDrawers();
+                        drawerLayout.closeDrawers();
                         return true;
                     }
                 }
@@ -143,7 +140,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 
@@ -180,7 +177,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
             case "nav_home_option":
                 return new FragmentEnter();
             case "nav_settings_option":
-                return new FragmentSettings();
+                return FragmentSettings.newInstance();
         }
 
         return new FragmentEnter();
