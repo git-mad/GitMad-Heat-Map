@@ -171,7 +171,6 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
      * onRequestPermissionsResult.
      */
     private void getLocationPermission() {
-
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

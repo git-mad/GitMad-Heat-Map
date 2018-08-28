@@ -136,6 +136,8 @@ public class ActivityRegistration extends AppCompatActivity {
             case "INVALID_EMAIL":
                 Toast.makeText(ActivityRegistration.this, R.string.reg_empty_email, Toast.LENGTH_LONG).show();
                 break;
+            default:
+                Toast.makeText(ActivityRegistration.this, error, Toast.LENGTH_LONG).show();
         }
     }
 

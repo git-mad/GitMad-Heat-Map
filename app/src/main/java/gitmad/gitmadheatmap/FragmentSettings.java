@@ -40,9 +40,9 @@ public class FragmentSettings extends Fragment {
 
         // Get username from shared preferences.
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(getString(R.string.pref_preferences), Context.MODE_PRIVATE);
-        String firstName = sharedPreferences.getString(getString(R.string.pref_first_name), null);
-        String lastName = sharedPreferences.getString(getString(R.string.pref_last_name), null);
-        String email = sharedPreferences.getString(getString(R.string.pref_user_email), null);
+        String firstName = sharedPreferences.getString(getString(R.string.pref_first_name), "");
+        String lastName = sharedPreferences.getString(getString(R.string.pref_last_name), "");
+        String email = sharedPreferences.getString(getString(R.string.pref_user_email), "");
         String fullName = firstName + " " + lastName;
 
         tvFullName.setText(fullName);

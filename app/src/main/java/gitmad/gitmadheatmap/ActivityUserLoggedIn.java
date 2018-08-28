@@ -175,7 +175,7 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         String selectedMenuItem = getIntent().getStringExtra(Integer.toString(R.string.intent_menu_item));
         switch (selectedMenuItem) {
             case "nav_home_option":
-                return new FragmentEnter();
+                return FragmentEnter.newInstance();
             case "nav_settings_option":
                 return FragmentSettings.newInstance();
         }

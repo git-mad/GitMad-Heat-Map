@@ -173,6 +173,8 @@ public class FbAuth {
                     case "ERROR_WRONG_PASSWORD":
                         Toast.makeText(AppContext.getContext(), R.string.auth_password_error, Toast.LENGTH_LONG).show();
                         break;
+                    default:
+                        Toast.makeText(AppContext.getContext(), ((FirebaseAuthException) e).getErrorCode(), Toast.LENGTH_LONG).show();
                 }
             }
         });
