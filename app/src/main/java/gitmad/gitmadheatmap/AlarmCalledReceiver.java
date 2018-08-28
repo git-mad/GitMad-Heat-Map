@@ -51,10 +51,10 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
     private void updateUserLocation(final Context context) {
         // If the user does not grant location permissions then their information will not be uploaded.
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+            FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
 
             // Create new task promise.
-            final Task locationResult = mFusedLocationProviderClient.getLastLocation();
+            final Task locationResult = fusedLocationProviderClient.getLastLocation();
 
             locationResult.addOnCompleteListener(new OnCompleteListener() {
                 @Override

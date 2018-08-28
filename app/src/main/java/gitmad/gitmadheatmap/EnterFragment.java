@@ -40,21 +40,28 @@ public class EnterFragment extends Fragment {
 
         // Layout elements.
         btnStart = v.findViewById(R.id.enter_btn_start_alarm);
-        btnStop = v.findViewById(R.id.enter_btn_stop_alarm);
-
-        // Attach onClickListeners to class onClick method.
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startAlarm();
             }
         });
+
+        btnStop = v.findViewById(R.id.enter_btn_stop_alarm);
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stopAlarm();
             }
         });
+
+        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        pendingIntent = PendingIntent.getBroadcast(
+                getActivity(),
+                0,
+                new Intent(getActivity(), AlarmCalledReceiver.class),
+                PendingIntent.FLAG_CANCEL_CURRENT);
 
         // This check is used to see if our alarm is already running.
         // It could be running from our receiver that called it once the phone booted up.
@@ -67,12 +74,11 @@ public class EnterFragment extends Fragment {
      * Starts an instance of the alarmManager for getting the user's location.
      */
     public void startAlarm() {
-        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        Intent alarmIntent = new Intent(getActivity(), AlarmCalledReceiver.class);
-
-        pendingIntent = PendingIntent.getBroadcast(getActivity().getApplicationContext(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 5000, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
-
+        alarmManager.setInexactRepeating(
+                AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + 5000,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                pendingIntent);
         setAlarmButtons(false);
     }
 
@@ -80,10 +86,6 @@ public class EnterFragment extends Fragment {
      * Stops an instance of the alarmManager for getting the user's location.
      */
     public void stopAlarm() {
-        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        Intent alarmIntent = new Intent(getActivity(), AlarmCalledReceiver.class);
-
-        pendingIntent = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.cancel(pendingIntent);
         setAlarmButtons(true);
     }
