@@ -38,7 +38,6 @@ public class EnterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_enter, container, false);
 
-        // Layout elements.
         btnStart = v.findViewById(R.id.enter_btn_start_alarm);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
