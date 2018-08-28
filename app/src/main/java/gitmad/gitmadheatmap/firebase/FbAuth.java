@@ -14,10 +14,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
 import gitmad.gitmadheatmap.AppContext;
+import gitmad.gitmadheatmap.IRetrieveUserCallback;
 import gitmad.gitmadheatmap.LoginActivity;
+import gitmad.gitmadheatmap.MainActivity;
 import gitmad.gitmadheatmap.R;
-import gitmad.gitmadheatmap.RetrieveUserCallback;
-import gitmad.gitmadheatmap.UserLoggedInActivity;
 import gitmad.gitmadheatmap.model.User;
 
 public class FbAuth {
@@ -147,14 +147,14 @@ public class FbAuth {
                      */
                     public void onSuccess(AuthResult authResult) {
                         // Set our preference.
-                        database.getUser(emailToUsername(email), new RetrieveUserCallback() {
+                        database.getUser(emailToUsername(email), new IRetrieveUserCallback() {
                             @Override
                             public void onFinish(User user) {
                                 setUserPreferences(user);
                             }
                         });
 
-                        Intent intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
+                        Intent intent = new Intent(AppContext.getContext(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
                         AppContext.getContext().startActivity(intent);

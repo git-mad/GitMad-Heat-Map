@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -76,7 +77,7 @@ public class RegistrationActivity extends AppCompatActivity {
         auth.createNewUser(new User(firstName, lastName, email), password);
 
         // Start the UserLoggedIn activity.
-        Intent intent = new Intent(this, UserLoggedInActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
         startActivity(intent);
@@ -135,6 +136,7 @@ public class RegistrationActivity extends AppCompatActivity {
             default:
                 Toast.makeText(RegistrationActivity.this, error, Toast.LENGTH_LONG).show();
         }
+        Log.e("Account Creation", error);
     }
 
     /**

@@ -17,7 +17,7 @@ import android.view.View;
 
 import gitmad.gitmadheatmap.firebase.FbAuth;
 
-public class UserLoggedInActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     // Fragment variables.
     private FragmentManager fragmentManager;
@@ -30,7 +30,7 @@ public class UserLoggedInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_logged_in);
+        setContentView(R.layout.activity_main);
 
         // Manage fragment setup
         fragmentManager = getSupportFragmentManager();
@@ -105,8 +105,8 @@ public class UserLoggedInActivity extends AppCompatActivity {
                             case R.id.nav_home_option:
                                 fragmentTransaction = fragmentManager.beginTransaction();
 
-                                EnterFragment enterFragment = EnterFragment.newInstance();
-                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, enterFragment);
+                                AlarmFragment alarmFragment = AlarmFragment.newInstance();
+                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, alarmFragment);
                                 fragmentTransaction.commit();
                                 break;
                             case R.id.nav_map_option:
@@ -175,11 +175,11 @@ public class UserLoggedInActivity extends AppCompatActivity {
         String selectedMenuItem = getIntent().getStringExtra(Integer.toString(R.string.intent_menu_item));
         switch (selectedMenuItem) {
             case "nav_home_option":
-                return EnterFragment.newInstance();
+                return AlarmFragment.newInstance();
             case "nav_settings_option":
                 return SettingsFragment.newInstance();
         }
 
-        return new EnterFragment();
+        return new AlarmFragment();
     }
 }

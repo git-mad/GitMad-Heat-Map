@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import gitmad.gitmadheatmap.firebase.FbDatabase;
+import gitmad.gitmadheatmap.model.LocationInformation;
 
 public class AlarmCalledReceiver extends BroadcastReceiver {
 

@@ -126,7 +126,7 @@ public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCall
      * If there are locations, then we create/add our heatmap on top of our existing map object.
      */
     private void getLocationsAndAddHeatMap() {
-        database.getLocations(new LocationCallback() {
+        database.getLocations(new ILocationCallback() {
             @Override
             public void onFinish(List<LatLng> locations) {
                 HeatMapActivity.this.locations = locations;
@@ -310,7 +310,7 @@ public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCall
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.nav_home_option:
-                                intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
+                                intent = new Intent(AppContext.getContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
                                 drawerIntent = intent;
@@ -319,7 +319,7 @@ public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCall
                                 logout = true;
                                 break;
                             case R.id.nav_settings_option:
-                                intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
+                                intent = new Intent(AppContext.getContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_settings_option");
                                 drawerIntent = intent;

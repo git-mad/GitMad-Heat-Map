@@ -1,4 +1,4 @@
-package gitmad.gitmadheatmap;
+package gitmad.gitmadheatmap.model;
 
 import com.google.android.gms.maps.model.LatLng;
 

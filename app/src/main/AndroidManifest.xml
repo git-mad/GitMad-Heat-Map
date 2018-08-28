@@ -42,7 +42,7 @@
             android:label="@string/title_activity_registration"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".UserLoggedInActivity" />
+        <activity android:name=".MainActivity" />
 
         <receiver
             android:name=".AlarmOnBootReceiver"

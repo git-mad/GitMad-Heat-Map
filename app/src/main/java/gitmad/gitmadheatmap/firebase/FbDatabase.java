@@ -12,9 +12,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import gitmad.gitmadheatmap.LocationCallback;
-import gitmad.gitmadheatmap.LocationInformation;
-import gitmad.gitmadheatmap.RetrieveUserCallback;
+import gitmad.gitmadheatmap.ILocationCallback;
+import gitmad.gitmadheatmap.IRetrieveUserCallback;
+import gitmad.gitmadheatmap.model.LocationInformation;
 import gitmad.gitmadheatmap.model.User;
 
 public class FbDatabase {
@@ -35,7 +35,7 @@ public class FbDatabase {
         myRef.setValue(locationInformation);
     }
 
-    public void getLocations(final LocationCallback locationCallback) {
+    public void getLocations(final ILocationCallback ILocationCallback) {
         DatabaseReference myRef = database.getReference();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -50,7 +50,7 @@ public class FbDatabase {
                     locationList.add(new LatLng(latitude, longitude));
                 }
 
-                locationCallback.onFinish(locationList);
+                ILocationCallback.onFinish(locationList);
             }
 
             @Override
@@ -66,7 +66,7 @@ public class FbDatabase {
      * @param username     The username of the user we wish to get from Firebase.
      * @param userCallback A callback to pass information back when our request is done.
      */
-    public void getUser(final String username, final RetrieveUserCallback userCallback) {
+    public void getUser(final String username, final IRetrieveUserCallback userCallback) {
         DatabaseReference myRef = database.getReference();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {

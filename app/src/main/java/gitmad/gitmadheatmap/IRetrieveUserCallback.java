@@ -2,6 +2,6 @@ package gitmad.gitmadheatmap;
 
 import gitmad.gitmadheatmap.model.User;
 
-public interface RetrieveUserCallback {
+public interface IRetrieveUserCallback {
     void onFinish(User user);
 }
