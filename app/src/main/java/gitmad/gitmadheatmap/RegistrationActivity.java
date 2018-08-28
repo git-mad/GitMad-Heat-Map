@@ -16,7 +16,7 @@ import gitmad.gitmadheatmap.firebase.FbAuth;
 import gitmad.gitmadheatmap.model.User;
 
 
-public class ActivityRegistration extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
     private Button register;
     private EditText passwordEntry;
@@ -80,7 +80,7 @@ public class ActivityRegistration extends AppCompatActivity {
         auth.createNewUser(new User(firstName, lastName, email), password);
 
         // Start the UserLoggedIn activity.
-        Intent intent = new Intent(this, ActivityUserLoggedIn.class);
+        Intent intent = new Intent(this, UserLoggedInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
         startActivity(intent);
@@ -128,16 +128,16 @@ public class ActivityRegistration extends AppCompatActivity {
     private void notifyUserError(String error) {
         switch (error) {
             case "INVALID_PASSWORD":
-                Toast.makeText(ActivityRegistration.this, R.string.reg_invalid_password, Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistrationActivity.this, R.string.reg_invalid_password, Toast.LENGTH_LONG).show();
                 break;
             case "EMPTY_EMAIL":
-                Toast.makeText(ActivityRegistration.this, R.string.reg_invalid_email, Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistrationActivity.this, R.string.reg_invalid_email, Toast.LENGTH_LONG).show();
                 break;
             case "INVALID_EMAIL":
-                Toast.makeText(ActivityRegistration.this, R.string.reg_empty_email, Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistrationActivity.this, R.string.reg_empty_email, Toast.LENGTH_LONG).show();
                 break;
             default:
-                Toast.makeText(ActivityRegistration.this, error, Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistrationActivity.this, error, Toast.LENGTH_LONG).show();
         }
     }
 

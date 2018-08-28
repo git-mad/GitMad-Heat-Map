@@ -13,8 +13,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
-import gitmad.gitmadheatmap.ActivityLogin;
-import gitmad.gitmadheatmap.ActivityUserLoggedIn;
+import gitmad.gitmadheatmap.LoginActivity;
+import gitmad.gitmadheatmap.UserLoggedInActivity;
 import gitmad.gitmadheatmap.AppContext;
 import gitmad.gitmadheatmap.R;
 import gitmad.gitmadheatmap.RetrieveUserCallback;
@@ -155,7 +155,7 @@ public class FbAuth {
                     }
                 });
 
-                Intent intent = new Intent(AppContext.getContext(), ActivityUserLoggedIn.class);
+                Intent intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
                 AppContext.getContext().startActivity(intent);
@@ -194,7 +194,7 @@ public class FbAuth {
         }
 
         // Return user to login screen.
-        Intent intent = new Intent(AppContext.getContext(), ActivityLogin.class);
+        Intent intent = new Intent(AppContext.getContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         AppContext.getContext().startActivity(intent);
     }

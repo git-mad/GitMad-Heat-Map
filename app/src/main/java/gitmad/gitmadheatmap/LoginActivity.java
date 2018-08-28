@@ -13,9 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.UUID;
+
 import gitmad.gitmadheatmap.firebase.FbAuth;
 
-public class ActivityLogin extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
     private TextView registerHere;
@@ -60,7 +62,7 @@ public class ActivityLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = emailEntry.getText().toString();
-                Intent intent = new Intent(view.getContext(), ActivityRegistration.class);
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 intent.putExtra("email", email);
                 startActivity(intent);
             }
@@ -82,7 +84,7 @@ public class ActivityLogin extends AppCompatActivity {
      * is already signed in and opening the app.
      */
     private void transitionToEnterActivity() {
-        Intent intent = new Intent(this, ActivityUserLoggedIn.class);
+        Intent intent = new Intent(this, UserLoggedInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
         startActivity(intent);
@@ -112,25 +114,11 @@ public class ActivityLogin extends AppCompatActivity {
      * This value is used so that we can still upload user's locations anonymously.
      */
     private void createUserPrefId() {
-        String userId = generateRandomId();
+        String userId = UUID.randomUUID().toString().substring(0, 10);
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.pref_preferences), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(getString(R.string.pref_user_id), userId);
         editor.apply();
-    }
-
-    /**
-     * Generate a new random string of length 10.
-     */
-    private String generateRandomId() {
-        int count = 10;
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        StringBuilder builder = new StringBuilder();
-        while (count-- != 0) {
-            int chosenCharacter = (int) (Math.random() * characters.length());
-            builder.append(characters.charAt(chosenCharacter));
-        }
-        return builder.toString();
     }
 
     /**

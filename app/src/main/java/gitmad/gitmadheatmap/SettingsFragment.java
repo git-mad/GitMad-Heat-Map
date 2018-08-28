@@ -14,13 +14,13 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentSettings extends Fragment {
+public class SettingsFragment extends Fragment {
 
     private TextView tvFullName;
     private TextView tvEmail;
 
-    public static FragmentSettings newInstance() {
-        return new FragmentSettings();
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override

@@ -39,7 +39,7 @@ import java.util.List;
 import gitmad.gitmadheatmap.firebase.FbAuth;
 import gitmad.gitmadheatmap.firebase.FbDatabase;
 
-public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCallback {
+public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
@@ -130,8 +130,8 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
         database.getLocations(new LocationCallback() {
             @Override
             public void onFinish(List<LatLng> locations) {
-                ActivityHeatMap.this.locations = locations;
-                if (ActivityHeatMap.this.locations.size() == 0) {
+                HeatMapActivity.this.locations = locations;
+                if (HeatMapActivity.this.locations.size() == 0) {
                     return;
                 }
                 addHeatMap();
@@ -287,8 +287,8 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
                 if (drawerIntent != null) {
                     startActivity(drawerIntent);
                 } else if (logout) {
-                    FbAuth mAuth = new FbAuth();
-                    mAuth.signUserOutAndReturnToLogin();
+                    FbAuth auth = new FbAuth();
+                    auth.signUserOutAndReturnToLogin();
                 }
             }
 
@@ -311,7 +311,7 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.nav_home_option:
-                                intent = new Intent(AppContext.getContext(), ActivityUserLoggedIn.class);
+                                intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
                                 drawerIntent = intent;
@@ -320,7 +320,7 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
                                 logout = true;
                                 break;
                             case R.id.nav_settings_option:
-                                intent = new Intent(AppContext.getContext(), ActivityUserLoggedIn.class);
+                                intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_settings_option");
                                 drawerIntent = intent;

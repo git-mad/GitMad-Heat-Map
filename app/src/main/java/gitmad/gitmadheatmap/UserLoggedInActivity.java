@@ -17,7 +17,7 @@ import android.view.View;
 
 import gitmad.gitmadheatmap.firebase.FbAuth;
 
-public class ActivityUserLoggedIn extends AppCompatActivity {
+public class UserLoggedInActivity extends AppCompatActivity {
 
     // Fragment variables.
     private FragmentManager fragmentManager;
@@ -105,20 +105,20 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
                             case R.id.nav_home_option:
                                 fragmentTransaction = fragmentManager.beginTransaction();
 
-                                FragmentEnter fragmentEnter = FragmentEnter.newInstance();
-                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, fragmentEnter);
+                                EnterFragment enterFragment = EnterFragment.newInstance();
+                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, enterFragment);
                                 fragmentTransaction.commit();
                                 break;
                             case R.id.nav_map_option:
-                                Intent intent = new Intent(AppContext.getContext(), ActivityHeatMap.class);
+                                Intent intent = new Intent(AppContext.getContext(), HeatMapActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 drawerIntent = intent;
                                 break;
                             case R.id.nav_settings_option:
                                 fragmentTransaction = fragmentManager.beginTransaction();
 
-                                FragmentSettings fragmentSettings = FragmentSettings.newInstance();
-                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, fragmentSettings);
+                                SettingsFragment settingsFragment = SettingsFragment.newInstance();
+                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, settingsFragment);
                                 fragmentTransaction.commit();
                                 break;
                             case R.id.nav_logout_option:
@@ -175,11 +175,11 @@ public class ActivityUserLoggedIn extends AppCompatActivity {
         String selectedMenuItem = getIntent().getStringExtra(Integer.toString(R.string.intent_menu_item));
         switch (selectedMenuItem) {
             case "nav_home_option":
-                return FragmentEnter.newInstance();
+                return EnterFragment.newInstance();
             case "nav_settings_option":
-                return FragmentSettings.newInstance();
+                return SettingsFragment.newInstance();
         }
 
-        return new FragmentEnter();
+        return new EnterFragment();
     }
 }

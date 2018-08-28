@@ -41,16 +41,16 @@ public class FbDatabase {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<LatLng> location_list = new ArrayList<>();
+                List<LatLng> locationList = new ArrayList<>();
                 DataSnapshot locations = dataSnapshot.child("locations");
                 Iterable<DataSnapshot> location_values = locations.getChildren();
                 for (DataSnapshot location : location_values) {
-                    double latitude = location.child("location").child("latitude").getValue(Double.class);
-                    double longitude = location.child("location").child("longitude").getValue(Double.class);
-                    location_list.add(new LatLng(latitude, longitude));
+                    double latitude = Double.parseDouble(location.child("location").child("latitude") + "");
+                    double longitude = Double.parseDouble(location.child("location").child("longitude") + "");
+                    locationList.add(new LatLng(latitude, longitude));
                 }
 
-                locationCallback.onFinish(location_list);
+                locationCallback.onFinish(locationList);
             }
 
             @Override

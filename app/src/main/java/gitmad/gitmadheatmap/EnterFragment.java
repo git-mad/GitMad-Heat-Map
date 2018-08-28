@@ -16,7 +16,7 @@ import android.widget.Button;
  * A fragment for our current home screen that allows the user to start and stop the alarm,
  * as well as enter the map.
  */
-public class FragmentEnter extends Fragment {
+public class EnterFragment extends Fragment {
 
     private Button startButton;
     private Button stopButton;
@@ -24,8 +24,8 @@ public class FragmentEnter extends Fragment {
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
 
-    public static FragmentEnter newInstance() {
-        return new FragmentEnter();
+    public static EnterFragment newInstance() {
+        return new EnterFragment();
     }
 
     @Override
