@@ -108,22 +108,21 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
     /**
      * Determines if the passed in coordinates are valid (within the bounds of Georgia Tech).
      *
-     * @param mCoordinates The user's last known location.
+     * @param coordinates The user's last known location.
      * @return true if the user is on Georgia Tech's campus, or false otherwise.
      */
-    private boolean isValidLatLng(LatLng mCoordinates) {
+    private boolean isValidLatLng(LatLng coordinates) {
         // Coordinates for the main campus.
-        if (mCoordinates.latitude <= 33.781492 && mCoordinates.latitude >= 33.768365) {
-            if (mCoordinates.longitude >= -84.407467 && mCoordinates.longitude <= -84.390811) {
-                return true;
-            }
+        if (coordinates.latitude <= 33.781492 && coordinates.latitude >= 33.768365
+                && coordinates.longitude >= -84.407467 && coordinates.longitude <= -84.390811) {
+            return true;
+
         }
 
         // Coordinates for the Tech Square.
-        if (mCoordinates.latitude <= 33.777781 && mCoordinates.latitude >= 33.775855) {
-            if (mCoordinates.longitude >= -84.390505 && mCoordinates.longitude <= -84.387356) {
-                return true;
-            }
+        if (coordinates.latitude <= 33.777781 && coordinates.latitude >= 33.775855
+                && coordinates.longitude >= -84.390505 && coordinates.longitude <= -84.387356) {
+            return true;
         }
 
         return false;

@@ -20,10 +20,10 @@ import gitmad.gitmadheatmap.firebase.FbAuth;
 public class LoginActivity extends AppCompatActivity {
 
 
-    private TextView registerHere;
-    private EditText passwordEntry;
-    private EditText emailEntry;
-    private Button signInButton;
+    private TextView tvRegisterHere;
+    private EditText etPassword;
+    private EditText etEmail;
+    private Button btnSignIn;
 
     // Firebase.
     FbAuth auth;
@@ -53,26 +53,26 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Layout elements.
-        signInButton = findViewById(R.id.login_btn_signIn);
-        passwordEntry = findViewById(R.id.login_editText_password);
-        emailEntry = findViewById(R.id.login_editText_email);
-        registerHere = findViewById(R.id.login_btn_register_here);
+        btnSignIn = findViewById(R.id.login_btn_signIn);
+        etPassword = findViewById(R.id.login_editText_password);
+        etEmail = findViewById(R.id.login_editText_email);
+        tvRegisterHere = findViewById(R.id.login_btn_register_here);
 
-        registerHere.setOnClickListener(new View.OnClickListener() {
+        tvRegisterHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailEntry.getText().toString();
+                String email = etEmail.getText().toString();
                 Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 intent.putExtra("email", email);
                 startActivity(intent);
             }
         });
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                String email = emailEntry.getText().toString().toLowerCase();
-                String password = passwordEntry.getText().toString();
+                String email = etEmail.getText().toString().toLowerCase();
+                String password = etPassword.getText().toString();
 
                 auth.signUserIn(email, password);
             }

@@ -13,11 +13,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
-import gitmad.gitmadheatmap.LoginActivity;
-import gitmad.gitmadheatmap.UserLoggedInActivity;
 import gitmad.gitmadheatmap.AppContext;
+import gitmad.gitmadheatmap.LoginActivity;
 import gitmad.gitmadheatmap.R;
 import gitmad.gitmadheatmap.RetrieveUserCallback;
+import gitmad.gitmadheatmap.UserLoggedInActivity;
 import gitmad.gitmadheatmap.model.User;
 
 public class FbAuth {
@@ -139,28 +139,27 @@ public class FbAuth {
      */
     public void signUserIn(final String email, String password) {
         // Create new task promise for signing in a user.
-        Task<AuthResult> task = auth.signInWithEmailAndPassword(email, password);
-
-        task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            /**
-             * Start the UserLoggedIn activity.
-             */
-            public void onSuccess(AuthResult authResult) {
-                // Set our preference.
-                database.getUser(emailToUsername(email), new RetrieveUserCallback() {
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
-                    public void onFinish(User user) {
-                        setUserPreferences(user);
-                    }
-                });
+                    /**
+                     * Start the UserLoggedIn activity.
+                     */
+                    public void onSuccess(AuthResult authResult) {
+                        // Set our preference.
+                        database.getUser(emailToUsername(email), new RetrieveUserCallback() {
+                            @Override
+                            public void onFinish(User user) {
+                                setUserPreferences(user);
+                            }
+                        });
 
-                Intent intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
-                AppContext.getContext().startActivity(intent);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                        Intent intent = new Intent(AppContext.getContext(), UserLoggedInActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
+                        AppContext.getContext().startActivity(intent);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             /**
              * Notify the user as to why they were unable to login to the app.

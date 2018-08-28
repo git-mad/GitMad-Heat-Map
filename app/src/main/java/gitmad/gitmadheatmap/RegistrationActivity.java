@@ -18,13 +18,11 @@ import gitmad.gitmadheatmap.model.User;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private Button register;
-    private EditText passwordEntry;
-    private EditText emailEntry;
-    private EditText fNameEntry;
-    private EditText lNameEntry;
-    private String email;
-    private String password;
+    private Button btnRegister;
+    private EditText etPassword;
+    private EditText etEmail;
+    private EditText etFirstName;
+    private EditText etLastName;
 
     // Firebase
     FirebaseAuth auth;
@@ -36,23 +34,22 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         // Layout elements.
-        register = findViewById(R.id.register_btn_create_account);
-        passwordEntry = findViewById(R.id.register_editText_password);
-        emailEntry = findViewById(R.id.register_editText_email);
-        fNameEntry = findViewById(R.id.register_editText_first_name);
-        lNameEntry = findViewById(R.id.register_editText_last_name);
+        btnRegister = findViewById(R.id.register_btn_create_account);
+        etPassword = findViewById(R.id.register_editText_password);
+        etEmail = findViewById(R.id.register_editText_email);
+        etFirstName = findViewById(R.id.register_editText_first_name);
+        etLastName = findViewById(R.id.register_editText_last_name);
 
         // Set information passed in from previous activity if it exists.
         Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-        emailEntry.setText(email);
-        passwordEntry.setText(password);
+        etEmail.setText(intent.getStringExtra("email"));
+        etPassword.setText("");
 
         // Firebase
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        register.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerUser();
@@ -65,10 +62,10 @@ public class RegistrationActivity extends AppCompatActivity {
      */
     public void registerUser() {
         // Layout elements.
-        final String email = emailEntry.getText().toString().toLowerCase();
-        final String password = passwordEntry.getText().toString();
-        final String firstName = fNameEntry.getText().toString();
-        final String lastName = lNameEntry.getText().toString();
+        final String email = etEmail.getText().toString().toLowerCase();
+        final String password = this.etPassword.getText().toString();
+        final String firstName = etFirstName.getText().toString();
+        final String lastName = etLastName.getText().toString();
 
         // If the entered credentials by the user are not valid, then prevent them from registering.
         if (!areCredentialsValid()) {
@@ -93,10 +90,10 @@ public class RegistrationActivity extends AppCompatActivity {
      */
     private boolean areCredentialsValid() {
         // Store values at the time of the login attempt.
-        String email = emailEntry.getText().toString();
-        String password = passwordEntry.getText().toString();
+        String email = etEmail.getText().toString();
+        String password = this.etPassword.getText().toString();
 
-        // Check if the user entered a password and if it is considered valid.
+        // Check if the user entered a etPassword and if it is considered valid.
         if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             notifyUserError("INVALID_PASSWORD");
 
@@ -142,10 +139,10 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     /**
-     * Our check for password validation.
+     * Our check for etPassword validation.
      *
-     * @param password The user's password
-     * @return password's validity.
+     * @param password The user's etPassword
+     * @return etPassword's validity.
      */
     private boolean isPasswordValid(String password) {
         return password.length() > 5;
