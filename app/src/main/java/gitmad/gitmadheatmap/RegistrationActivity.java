@@ -33,28 +33,27 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        // Layout elements.
-        btnRegister = findViewById(R.id.register_btn_create_account);
-        etPassword = findViewById(R.id.register_editText_password);
-        etEmail = findViewById(R.id.register_editText_email);
-        etFirstName = findViewById(R.id.register_editText_first_name);
-        etLastName = findViewById(R.id.register_editText_last_name);
-
-        // Set information passed in from previous activity if it exists.
-        Intent intent = getIntent();
-        etEmail.setText(intent.getStringExtra("email"));
-        etPassword.setText("");
-
         // Firebase
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+        // Layout elements.
+        btnRegister = findViewById(R.id.register_btn_create_account);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerUser();
             }
         });
+
+        etPassword = findViewById(R.id.register_editText_password);
+
+        etEmail = findViewById(R.id.register_editText_email);
+        // Set information passed in from previous activity if it exists.
+        etEmail.setText(getIntent().getStringExtra("email"));
+
+        etFirstName = findViewById(R.id.register_editText_first_name);
+        etLastName = findViewById(R.id.register_editText_last_name);
     }
 
     /**

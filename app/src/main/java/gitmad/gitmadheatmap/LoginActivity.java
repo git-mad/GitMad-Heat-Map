@@ -19,7 +19,6 @@ import gitmad.gitmadheatmap.firebase.FbAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-
     private TextView tvRegisterHere;
     private EditText etPassword;
     private EditText etEmail;

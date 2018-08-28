@@ -133,10 +133,10 @@ public class UserLoggedInActivity extends AppCompatActivity {
         );
     }
 
-    @Override
     /**
      * Handles all toolbar interactions.
      */
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

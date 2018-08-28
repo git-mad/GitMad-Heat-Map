@@ -65,7 +65,6 @@ public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCall
     private Intent drawerIntent;
     private boolean logout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
