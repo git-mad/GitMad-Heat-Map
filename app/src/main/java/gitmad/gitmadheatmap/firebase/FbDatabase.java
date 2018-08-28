@@ -8,7 +8,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ public class FbDatabase {
 
     // An instance of the database.
     private FirebaseDatabase database;
-    private FirebaseFirestore firestore;
 
     // A reference to our root node of the database.
     private DatabaseReference reference;

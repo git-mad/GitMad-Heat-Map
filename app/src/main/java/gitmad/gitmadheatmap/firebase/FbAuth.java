@@ -12,7 +12,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import gitmad.gitmadheatmap.AppContext;
 import gitmad.gitmadheatmap.LoginActivity;
@@ -56,8 +55,6 @@ public class FbAuth {
             public void onSuccess(AuthResult authResult) {
                 User user = new User(firstName, lastName, email);
 
-                FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                firestore.collection("users").document(auth.getCurrentUser().getUid()).set(user);
                 database.setReferenceValue("users/" + user.getUsername(), user);
 
                 // Set local shared preferences for user when they create a new account and enter the app.
