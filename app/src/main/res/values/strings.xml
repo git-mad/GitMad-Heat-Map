@@ -2,9 +2,9 @@
     <string name="app_name">GitMad Heat Map</string>
     <string name="title_activity_maps">Map</string>
     <string name="btn_enter_map">Enter Map</string>
-    <string name="btn_start_alarm">Start Alarm</string>
-    <string name="btn_stop_alarm">Stop Alarm</string>
-    <string name="txtvw_alarm_note">Note. If the alarm is on and you did not start it, then it was started when your phone was booted up.</string>
+    <string name="btn_turn_on_tracking">Turn on Tracking</string>
+    <string name="btn_turn_off_tracking">Turn off Tracking</string>
+    <string name="txtvw_tracking_note">Note. If tracking is on and you did not turn it on, then it was started when your phone was booted up.</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
