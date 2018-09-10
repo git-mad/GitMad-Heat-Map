@@ -3,18 +3,15 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ActivityUserLoggedIn"
-
-        >
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/loggedIn_toolbar"
@@ -24,13 +21,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="gitmad.gitmadheatmap.ActivityHeatMap" />
+            tools:context="gitmad.gitmadheatmap.HeatMapActivity" />
 
     </LinearLayout>
 
@@ -41,8 +37,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer_view"
-        app:headerLayout="@layout/nav_header"/>
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view" />
 
 </android.support.v4.widget.DrawerLayout>
 
