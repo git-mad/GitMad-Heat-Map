@@ -1,4 +1,4 @@
-package gitmad.gitmadheatmap;
+package gitmad.gitmadheatmap.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -14,9 +14,9 @@ public class LocationInformation {
     private String currentTime;
     private String username;
 
-    public LocationInformation( LatLng location, String username ) {
+    public LocationInformation(LatLng location, String username) {
         this.location = location;
-        currentTime = DateFormat.getDateTimeInstance().format( new Date() );
+        currentTime = DateFormat.getDateTimeInstance().format(new Date());
         this.username = username;
     }
 
@@ -28,5 +28,7 @@ public class LocationInformation {
         return this.currentTime;
     }
 
-    public String getUsername() { return this.username; }
+    public String getUsername() {
+        return this.username;
+    }
 }

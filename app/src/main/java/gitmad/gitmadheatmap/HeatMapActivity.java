@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,8 +28,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.TileOverlay;
-import com.google.android.gms.location.places.PlaceDetectionClient;
-
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,64 +36,65 @@ import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
 import java.util.List;
 
-public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCallback {
+import gitmad.gitmadheatmap.firebase.FbAuth;
+import gitmad.gitmadheatmap.firebase.FbDatabase;
 
-    // Heatmap variables.
-    private GoogleMap mMap;
-    private HeatmapTileProvider mProvider;
-    private TileOverlay mOverlay;
-    private PlaceDetectionClient mPlaceDetectionClient;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
-    private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085);
+    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
+    // Heatmap variables.
+    private GoogleMap googleMap;
+    private HeatmapTileProvider tileProvider;
+    private TileOverlay tileOverlay;
+    private PlaceDetectionClient placeDetectionClient;
+    private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean mLocationPermissionGranted;
+    private boolean locationPermissionsGranted;
 
-    private Location mLastKnownLocation;
-    private List<LatLng> locations_list;
+    private Location lastKnownLocation;
+    private List<LatLng> locations;
 
     // Database.
-    private FbDatabase mDatabase;
+    private FbDatabase database;
 
     // DrawerLayout variables.
-    private DrawerLayout mDrawerLayout;
+    private DrawerLayout drawerLayout;
     private Intent drawerIntent;
     private boolean logout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDatabase = new FbDatabase();
+        database = new FbDatabase();
 
         setContentView(R.layout.activity_maps);
 
         // Setup toolbar.
-        Toolbar toolbar = findViewById( R.id.loggedIn_toolbar );
-        setSupportActionBar( toolbar );
-        getSupportActionBar().setDisplayShowTitleEnabled( false );
+        Toolbar toolbar = findViewById(R.id.loggedIn_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled( true );
-        actionBar.setHomeAsUpIndicator( R.drawable.ic_menu_icon );
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_icon);
 
         // Manage DrawerLayout.
         setupDrawer();
 
         // Provide quick access to the device's current place.
-        mPlaceDetectionClient = Places.getPlaceDetectionClient( this, null );
+        placeDetectionClient = Places.getPlaceDetectionClient(this, null);
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient( this );
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         setUpMap();
     }
 
     private void setUpMap() {
-        ( ( SupportMapFragment ) getSupportFragmentManager().findFragmentById( R.id.map ) ).getMapAsync( this );
+        ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
     }
 
     /**
@@ -107,7 +107,7 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        this.googleMap = googleMap;
 
         // Prompt the user for permission.
         getLocationPermission();
@@ -119,7 +119,6 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
         getDeviceLocation();
 
         getLocationsAndAddHeatMap();
-
     }
 
     /**
@@ -127,11 +126,11 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
      * If there are locations, then we create/add our heatmap on top of our existing map object.
      */
     private void getLocationsAndAddHeatMap() {
-        mDatabase.getLocations(new LocationCallback() {
+        database.getLocations(new ILocationCallback() {
             @Override
             public void onFinish(List<LatLng> locations) {
-                locations_list = locations;
-                if( locations_list.size() == 0 ) {
+                HeatMapActivity.this.locations = locations;
+                if (HeatMapActivity.this.locations.size() == 0) {
                     return;
                 }
                 addHeatMap();
@@ -156,8 +155,8 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
         Gradient gradient = new Gradient(colors, startPoints);
 
         // Create the tile provider.
-        mProvider = new HeatmapTileProvider.Builder()
-                .data(locations_list)
+        tileProvider = new HeatmapTileProvider.Builder()
+                .data(locations)
                 .gradient(gradient)
                 .build();
 
@@ -168,7 +167,7 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
         mProvider.setOpacity( 0.6f );
 
         // Add the tile overlay to the map.
-        mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+        tileOverlay = googleMap.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
     }
 
     /**
@@ -177,11 +176,10 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
      * onRequestPermissionsResult.
      */
     private void getLocationPermission() {
-
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mLocationPermissionGranted = true;
+            locationPermissionsGranted = true;
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -189,20 +187,20 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
-    @Override
     /**
      * Handles the result of location permission request.
      */
+    @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
-        mLocationPermissionGranted = false;
+        locationPermissionsGranted = false;
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true;
+                    locationPermissionsGranted = true;
                 }
             }
         }
@@ -213,20 +211,20 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
      * Update the map UI based on location permissions and if a map instance is created.
      */
     private void updateLocationUI() {
-        if (mMap == null) {
+        if (googleMap == null) {
             return;
         }
         try {
-            if (mLocationPermissionGranted) {
-                mMap.setMyLocationEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            if (locationPermissionsGranted) {
+                googleMap.setMyLocationEnabled(true);
+                googleMap.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
-                mMap.setMyLocationEnabled(false);
-                mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mLastKnownLocation = null;
+                googleMap.setMyLocationEnabled(false);
+                googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+                lastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
@@ -237,33 +235,33 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
      */
     private void getDeviceLocation() {
         try {
-            if (mLocationPermissionGranted) {
-                Task locationResult = mFusedLocationProviderClient.getLastLocation();
+            if (locationPermissionsGranted) {
+                Task locationResult = fusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
-                            mLastKnownLocation = (Location) task.getResult();
+                            lastKnownLocation = (Location) task.getResult();
 
                             // If lastKnownLocation is null ( usually happens on emulator ) return to avoid error.
-                            if( mLastKnownLocation == null ) {
+                            if (lastKnownLocation == null) {
                                 return;
                             }
 
                             // Move the camera to the desired position
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    new LatLng(mLastKnownLocation.getLatitude(),
-                                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
 
                         } else {
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                            googleMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }
                 });
             }
-        } catch(SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
@@ -272,7 +270,7 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
      * Add DrawerLayout listener and add navigation view listener.
      */
     private void setupDrawer() {
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         // Set this to false. We use this boolean later to mark that the user has tried to logout and we should fulfill this request.
         // This is used similarly to the drawerIntent variable. It prevents lag with the drawer screen.
@@ -280,80 +278,78 @@ public class ActivityHeatMap extends AppCompatActivity implements OnMapReadyCall
 
         // We initialize this listener mainly for its ability to remove lag when changing activities.
         // By waiting for the drawer to fully close, the animation looks smooth and cleanly executed.
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                //
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                //
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                if( drawerIntent != null) {
-                    startActivity( drawerIntent );
-                } else if( logout ) {
-                    FbAuth mAuth = new FbAuth();
-                    mAuth.signUserOutAndReturnToLogin();
+                if (drawerIntent != null) {
+                    startActivity(drawerIntent);
+                } else if (logout) {
+                    FbAuth auth = new FbAuth();
+                    auth.signUserOutAndReturnToLogin();
                 }
             }
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                //
             }
         });
 
-        NavigationView navigationView = findViewById( R.id.nav_view );
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         // Set our map option within the nav drawer as selected.
-        navigationView.setCheckedItem( R.id.nav_map_option);
+        navigationView.setCheckedItem(R.id.nav_map_option);
 
         // A listener that handles onClicks for menu items in the navigation drawer.
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     Intent intent;
+
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch( item.getItemId() ) {
+                        switch (item.getItemId()) {
                             case R.id.nav_home_option:
-                                intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
-                                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_home_option" );
+                                intent = new Intent(AppContext.getContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_home_option");
                                 drawerIntent = intent;
                                 break;
                             case R.id.nav_logout_option:
                                 logout = true;
                                 break;
                             case R.id.nav_settings_option:
-                                intent = new Intent( MyApp.getContext(), ActivityUserLoggedIn.class );
-                                intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                                intent.putExtra( Integer.toString( R.string.intent_menu_item ), "nav_settings_option" );
+                                intent = new Intent(AppContext.getContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_settings_option");
                                 drawerIntent = intent;
                                 break;
                         }
 
-                        mDrawerLayout.closeDrawers();
+                        drawerLayout.closeDrawers();
                         return true;
                     }
                 }
         );
     }
 
-    @Override
     /**
      * Handles all toolbar interactions.
      */
-    public boolean onOptionsItemSelected( MenuItem item ) {
-        switch( item.getItemId() ) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer( GravityCompat.START );
+                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 
-        return super.onOptionsItemSelected( item );
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -3,20 +3,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home_option"
-            android:title="@string/nav_home_option"
-            android:icon="@drawable/ic_home_icon" />
+            android:icon="@drawable/ic_home_icon"
+            android:title="@string/nav_home_option" />
         <item
             android:id="@+id/nav_map_option"
-            android:title="@string/nav_map_option"
-            android:icon="@drawable/ic_map_icon" />
+            android:icon="@drawable/ic_map_icon"
+            android:title="@string/nav_map_option" />
         <item
             android:id="@+id/nav_settings_option"
-            android:title="@string/nav_settings_option"
-            android:icon="@drawable/ic_settings_icon"/>
+            android:icon="@drawable/ic_settings_icon"
+            android:title="@string/nav_settings_option" />
 
         <item
             android:id="@+id/nav_logout_option"
-            android:title="@string/logout"
-            android:icon="@drawable/ic_exit_to_app_icon"/>
+            android:icon="@drawable/ic_exit_to_app_icon"
+            android:title="@string/logout" />
     </group>
 </menu>
