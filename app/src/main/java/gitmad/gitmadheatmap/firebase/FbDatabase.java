@@ -45,8 +45,8 @@ public class FbDatabase {
                 DataSnapshot locations = dataSnapshot.child("locations");
                 Iterable<DataSnapshot> location_values = locations.getChildren();
                 for (DataSnapshot location : location_values) {
-                    double latitude = Double.parseDouble(location.child("location").child("latitude") + "");
-                    double longitude = Double.parseDouble(location.child("location").child("longitude") + "");
+                    double latitude = location.child("location").child("latitude").getValue( double.class );
+                    double longitude = location.child("location").child("longitude").getValue( double.class );
                     locationList.add(new LatLng(latitude, longitude));
                 }
 
