@@ -161,10 +161,10 @@ public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCall
                 .build();
 
         // Set the radius of each data location (can choose between 10 and 50, 20 is default).
-//        mProvider.setRadius( 20 );
+//        tileProvider.setRadius( 20 );
 
         // Set the opacity of each data location (can choose between 0 and 1, 0.7 is default).
-        mProvider.setOpacity( 0.6f );
+//        tileProvider.setOpacity( 0.6f );
 
         // Add the tile overlay to the map.
         tileOverlay = googleMap.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
@@ -330,6 +330,11 @@ public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCall
                                 intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_settings_option");
                                 drawerIntent = intent;
                                 break;
+                            case R.id.nav_friends_option:
+                                intent = new Intent(AppContext.getContext(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra(Integer.toString(R.string.intent_menu_item), "nav_friends_option");
+                                drawerIntent = intent;
                         }
 
                         drawerLayout.closeDrawers();
