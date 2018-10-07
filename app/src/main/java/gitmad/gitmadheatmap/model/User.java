@@ -2,6 +2,7 @@ package gitmad.gitmadheatmap.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Class for app user's.
@@ -14,6 +15,7 @@ public class User {
     private String email;
     private Date joinDate;
     private String username;
+    private String hash;
 //    private LatLng location;
 //    private List<User> friends;
 //    private LatLng[] mostFrequentedSpots;
@@ -25,6 +27,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.joinDate = Calendar.getInstance().getTime();
+        this.hash = createUserHash();
     }
 
     public String getEmail() {
@@ -47,6 +50,8 @@ public class User {
         return this.username;
     }
 
+    public String getHash() { return this.hash; }
+
     /**
      * Converts a user's email into an username.
      *
@@ -55,6 +60,14 @@ public class User {
      */
     private String emailToUsername(String email) {
         return email.substring(0, email.indexOf('@'));
+    }
+
+    /**
+     * Create a new userId SharedPreference value.
+     * This value is used so that we can still upload user's locations anonymously.
+     */
+    private String createUserHash() {
+        return UUID.randomUUID().toString().substring(0, 10);
     }
 
 }

@@ -18,6 +18,7 @@ import gitmad.gitmadheatmap.IRetrieveUserCallback;
 import gitmad.gitmadheatmap.LoginActivity;
 import gitmad.gitmadheatmap.MainActivity;
 import gitmad.gitmadheatmap.R;
+import gitmad.gitmadheatmap.model.Friend;
 import gitmad.gitmadheatmap.model.User;
 
 public class FbAuth {
@@ -54,8 +55,10 @@ public class FbAuth {
              */
             public void onSuccess(AuthResult authResult) {
                 User user = new User(firstName, lastName, email);
+                Friend friend = new Friend( user );
 
                 database.setReferenceValue("users/" + user.getUsername(), user);
+                database.setReferenceValue( "friends/" + friend.getUser().getHash(), friend );
 
                 // Set local shared preferences for user when they create a new account and enter the app.
                 setUserPreferences(user);
