@@ -114,19 +114,19 @@ public class AlarmCalledReceiver extends BroadcastReceiver {
      */
     private boolean isValidLatLng(LatLng coordinates) {
         // Coordinates for the main campus.
-        return true;
-//        if (coordinates.latitude <= 33.781492 && coordinates.latitude >= 33.768365
-//                && coordinates.longitude >= -84.407467 && coordinates.longitude <= -84.390811) {
-//            return true;
-//
-//        }
-//
-//        // Coordinates for the Tech Square.
-//        if (coordinates.latitude <= 33.777781 && coordinates.latitude >= 33.775855
-//                && coordinates.longitude >= -84.390505 && coordinates.longitude <= -84.387356) {
-//            return true;
-//        }
+        // If you don't want a restriction on coordinates, comment the below lines out and return true.
+        if (coordinates.latitude <= 33.781492 && coordinates.latitude >= 33.768365
+                && coordinates.longitude >= -84.407467 && coordinates.longitude <= -84.390811) {
+            return true;
 
-//        return false;
+        }
+
+        // Coordinates for the Tech Square.
+        if (coordinates.latitude <= 33.777781 && coordinates.latitude >= 33.775855
+                && coordinates.longitude >= -84.390505 && coordinates.longitude <= -84.387356) {
+            return true;
+        }
+
+        return false;
     }
 }
