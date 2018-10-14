@@ -1,7 +1,10 @@
 package gitmad.gitmadheatmap.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -16,6 +19,7 @@ public class User {
     private Date joinDate;
     private String username;
     private String hash;
+    private String friends;
 //    private LatLng location;
 //    private List<User> friends;
 //    private LatLng[] mostFrequentedSpots;
@@ -28,6 +32,17 @@ public class User {
         this.lastName = lastName;
         this.joinDate = Calendar.getInstance().getTime();
         this.hash = createUserHash();
+        this.friends = "";
+    }
+
+    public User(String firstName, String lastName, String email, String hash, String friends) {
+        this.email = email;
+        this.username = emailToUsername(email);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.joinDate = Calendar.getInstance().getTime();
+        this.hash = hash;
+        this.friends = friends;
     }
 
     public String getEmail() {
@@ -51,6 +66,14 @@ public class User {
     }
 
     public String getHash() { return this.hash; }
+
+    public String getFriends() { return this.friends; }
+
+    public void addFriend( String friend ) { this.friends += "," + friend; }
+
+    public ArrayList<String> getFriendsSet() {
+        return new ArrayList<>(Arrays.asList(friends.split(",")));
+    }
 
     /**
      * Converts a user's email into an username.

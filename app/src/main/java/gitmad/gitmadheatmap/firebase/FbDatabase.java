@@ -1,6 +1,10 @@
 package gitmad.gitmadheatmap.firebase;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
@@ -10,10 +14,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import gitmad.gitmadheatmap.AppContext;
 import gitmad.gitmadheatmap.ILocationCallback;
+import gitmad.gitmadheatmap.IRetrieveFriendsCallback;
 import gitmad.gitmadheatmap.IRetrieveUserCallback;
+import gitmad.gitmadheatmap.R;
+import gitmad.gitmadheatmap.model.Friend;
 import gitmad.gitmadheatmap.model.LocationInformation;
 import gitmad.gitmadheatmap.model.User;
 
@@ -76,7 +85,9 @@ public class FbDatabase {
                 String firstName = user.child("firstName").getValue(String.class);
                 String lastName = user.child("lastName").getValue(String.class);
                 String email = user.child("email").getValue(String.class);
-                userCallback.onFinish(new User(firstName, lastName, email));
+                String hash = user.child("hash").getValue( String.class );
+                String friends = user.child("friends").getValue( String.class );
+                userCallback.onFinish(new User(firstName, lastName, email, hash, friends));
             }
 
             @Override
@@ -84,6 +95,39 @@ public class FbDatabase {
 
             }
         });
+    }
+
+    public void getFriends(final IRetrieveFriendsCallback friendsCallback ) {
+        SharedPreferences sharedPreferences = AppContext.getContext().getSharedPreferences(AppContext.getContext().getString(R.string.pref_preferences), Context.MODE_PRIVATE);
+        String friendsString = sharedPreferences.getString( AppContext.getContext().getString( R.string.pref_user_friends ), "" );
+
+        final DatabaseReference myRef = database.getReference();
+        final ArrayList<String> friends = new ArrayList<>(Arrays.asList(friendsString.split(",")));
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                ArrayList<Friend> friendArrayList = new ArrayList<>();
+                for ( String friend : friends ) {
+//                    myRef.equalTo( friend );
+                    DataSnapshot dbFriend = dataSnapshot.child( "friends/" + friend );
+                    String firstName = dbFriend.child("user/firstName").getValue(String.class);
+                    String lastName = dbFriend.child("user/lastName").getValue(String.class);
+                    String email = dbFriend.child("user/email").getValue(String.class);
+
+                    friendArrayList.add( new Friend(firstName, lastName, email, friend) );
+                }
+
+                friendsCallback.onFinish( friendArrayList );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void setReferenceValue(String reference, Object value) {

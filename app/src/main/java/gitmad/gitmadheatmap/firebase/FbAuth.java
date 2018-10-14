@@ -55,10 +55,10 @@ public class FbAuth {
              */
             public void onSuccess(AuthResult authResult) {
                 User user = new User(firstName, lastName, email);
-                Friend friend = new Friend( user );
+                Friend friend = new Friend( firstName, lastName, email, user.getHash() );
 
                 database.setReferenceValue("users/" + user.getUsername(), user);
-                database.setReferenceValue( "friends/" + friend.getUser().getHash(), friend );
+                database.setReferenceValue( "friends/" + friend.getHash(), friend );
 
                 // Set local shared preferences for user when they create a new account and enter the app.
                 setUserPreferences(user);
@@ -100,7 +100,7 @@ public class FbAuth {
         editor.putString(AppContext.getContext().getString(R.string.pref_user_email), user.getEmail());
         editor.putString(AppContext.getContext().getString(R.string.pref_first_name), user.getFirstName());
         editor.putString(AppContext.getContext().getString(R.string.pref_last_name), user.getLastName());
-
+        editor.putString(AppContext.getContext().getString(R.string.pref_user_friends), user.getFriends());
         editor.apply();
     }
 
@@ -117,6 +117,7 @@ public class FbAuth {
         editor.remove(AppContext.getContext().getString(R.string.pref_first_name));
         editor.remove(AppContext.getContext().getString(R.string.pref_last_name));
         editor.remove(AppContext.getContext().getString(R.string.pref_user_email));
+        editor.remove(AppContext.getContext().getString(R.string.pref_user_friends));
 
         editor.apply();
     }
