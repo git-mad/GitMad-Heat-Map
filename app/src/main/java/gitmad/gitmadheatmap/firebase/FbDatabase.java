@@ -101,6 +101,12 @@ public class FbDatabase {
         SharedPreferences sharedPreferences = AppContext.getContext().getSharedPreferences(AppContext.getContext().getString(R.string.pref_preferences), Context.MODE_PRIVATE);
         String friendsString = sharedPreferences.getString( AppContext.getContext().getString( R.string.pref_user_friends ), "" );
 
+        // If there are no friends then return. No need to do a db call.
+        if( friendsString.equals( "" ) ) {
+            friendsCallback.onFinish( new ArrayList<Friend>() );
+            return;
+        }
+
         final DatabaseReference myRef = database.getReference();
         final ArrayList<String> friends = new ArrayList<>(Arrays.asList(friendsString.split(",")));
 
@@ -110,7 +116,6 @@ public class FbDatabase {
 
                 ArrayList<Friend> friendArrayList = new ArrayList<>();
                 for ( String friend : friends ) {
-//                    myRef.equalTo( friend );
                     DataSnapshot dbFriend = dataSnapshot.child( "friends/" + friend );
                     String firstName = dbFriend.child("user/firstName").getValue(String.class);
                     String lastName = dbFriend.child("user/lastName").getValue(String.class);

@@ -70,4 +70,5 @@
     <string name="friends_item_btn_map">View on Map</string>
     <string name="friends_item_btn_remove">Remove Friend</string>
     <string name="friends_text_title">Your Friends</string>
+    <string name="friends_no_friends">You don\'t have any friends yet :(</string>
 </resources>
