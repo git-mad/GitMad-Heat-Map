@@ -13,7 +13,10 @@
             android:id="@+id/nav_settings_option"
             android:icon="@drawable/ic_settings_icon"
             android:title="@string/nav_settings_option" />
-
+        <item
+            android:id="@+id/nav_friends_option"
+            android:icon="@drawable/ic_friend_icon"
+            android:title="@string/nav_friends"/>
         <item
             android:id="@+id/nav_logout_option"
             android:icon="@drawable/ic_exit_to_app_icon"

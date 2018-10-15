@@ -121,6 +121,13 @@ public class MainActivity extends AppCompatActivity {
                                 fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, settingsFragment);
                                 fragmentTransaction.commit();
                                 break;
+                            case R.id.nav_friends_option:
+                                fragmentTransaction = fragmentManager.beginTransaction();
+
+                                FriendsFragment friendsFragment = FriendsFragment.newInstance();
+                                fragmentTransaction.replace(R.id.loggedIn_frame_fragment_container, friendsFragment);
+                                fragmentTransaction.commit();
+                                break;
                             case R.id.nav_logout_option:
                                 logout = true;
                                 break;
@@ -159,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 return R.id.nav_home_option;
             case "nav_settings_option":
                 return R.id.nav_settings_option;
+            case "nav_friends_option":
+                return R.id.nav_friends_option;
         }
 
         return R.id.nav_home_option;
