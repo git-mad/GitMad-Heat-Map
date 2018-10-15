@@ -50,6 +50,7 @@
     <string name="pref_first_name">first name</string>
     <string name="pref_last_name">last name</string>
     <string name="pref_user_email">email</string>
+    <string name="pref_user_friends">friends</string>
 
     <!-- Strings related to Registration Exceptions -->
     <string name="reg_invalid_email">There must be an "@" sign in your email</string>
@@ -60,8 +61,14 @@
     <string name="nav_home_option">Home</string>
     <string name="nav_map_option">Map</string>
     <string name="nav_settings_option">Settings</string>
+    <string name="nav_friends">Friends</string>
 
     <!-- Intent extra string -->
     <string name="intent_menu_item">MENU_ITEM</string>
 
+    <!-- Friends layout User Items -->
+    <string name="friends_item_btn_map">View on Map</string>
+    <string name="friends_item_btn_remove">Remove Friend</string>
+    <string name="friends_text_title">Your Friends</string>
+    <string name="friends_no_friends">You don\'t have any friends yet :(</string>
 </resources>
