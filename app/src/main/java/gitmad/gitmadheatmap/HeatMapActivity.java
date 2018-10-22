@@ -39,7 +39,7 @@ import java.util.List;
 import gitmad.gitmadheatmap.firebase.FbAuth;
 import gitmad.gitmadheatmap.firebase.FbDatabase;
 
-public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+    public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
@@ -52,7 +52,7 @@ public class HeatMapActivity extends AppCompatActivity implements OnMapReadyCall
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean locationPermissionsGranted;
+    private boolean lo+cationPermissionsGranted;
 
     private Location lastKnownLocation;
     private List<LatLng> locations;

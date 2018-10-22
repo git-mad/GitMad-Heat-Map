@@ -26,10 +26,13 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        tvFullName = v.findViewById(R.id.settings_text_full_name);
-        tvEmail = v.findViewById(R.id.settings_text_email);
+        //TODO 3: Create a new View by inflating the fragment settings layout
+        View v = ;
+
+        //TODO 4: Initialize the tvFullName and tvEmail variables using the TextViews in the
+        //fragment_settings layout for full name and email. (Not TextViews with title in the id)
+
 
         // Get username from shared preferences.
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(getString(R.string.pref_preferences), Context.MODE_PRIVATE);

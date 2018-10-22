@@ -33,12 +33,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Manage fragment setup
-        fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        // Set the fragment that the activity initializes to.
-        fragmentTransaction.add(R.id.loggedIn_frame_fragment_container, getFragmentToBeDisplayed());
-        fragmentTransaction.commit();
+        //TODO 1: Initialize the FragemntManager variable, create a
+        // new FragemntTransaction variable, and begin the transaction
+
+
+
+        //TODO 2: Add the fragment to be displayed to the FragementTransaction variable
+        //Commit the fragment transaction
 
         // Manage DrawerLayout
         setupDrawer();
