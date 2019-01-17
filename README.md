@@ -58,17 +58,17 @@ After doing this your api key should be linked and you should be able to use the
     <li>If the "Add the Realtime Database to your app" button is present in step 2. Click it and accept changes.</li>
     <li>Now do the same thing under the "Authentication" section in the Firebase side tab.</li>
     <li>If you get an error after the Gradle is finished buidling titled "Failed to resolve: firebase-database-15.0.0", this is due to an error of the automatic integration through the Firebase tool. Open up the file where the error is located and change any lines that look like this:
-      <p>
-          ```java
-                 implementation 'com.google.firebase:firebase-database:16.0.1:15.0.0'
-           ```
-       <\p>
+      
+      ```
+        implementation 'com.google.firebase:firebase-database:16.0.1:15.0.0'
+      ```
+ 
  to this:
-         <p>
-         ```java
-                 implementation 'com.google.firebase:firebase-database:16.0.1'
-           ```
-         </p>
+ 
+      ```
+         implementation 'com.google.firebase:firebase-database:16.0.1'
+      ```
+      
   i.e. if there are any other lines that have "16.0.1:15.0.0", change it to "16.0.1"
   </ol>
   <p>Cool, you should be set up to work with Firebase and can now write and read data from your Firebase account.</p>
