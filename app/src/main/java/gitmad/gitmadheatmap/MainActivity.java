@@ -34,13 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Manage fragment setup
 
-        //TODO 1: Initialize the FragemntManager variable, create a
-        // new FragemntTransaction variable, and begin the transaction
+        //TODO 1: Initialize the FragemntManager variable
+
+
+        //TODO 2: Create a new FragemntTransaction variable, and begin transaction
 
 
 
-        //TODO 2: Add the fragment to be displayed to the FragementTransaction variable
-        //Commit the fragment transaction
+        //TODO 3: Add the fragment to be displayed to the FragementTransaction variable
+        //Hint: Check the Activity XML to find containerID
+
+
+        //TODO 4: Commit the fragment transaction
 
         // Manage DrawerLayout
         setupDrawer();

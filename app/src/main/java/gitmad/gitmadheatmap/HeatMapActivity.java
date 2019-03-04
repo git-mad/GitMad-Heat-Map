@@ -52,7 +52,7 @@ import gitmad.gitmadheatmap.firebase.FbDatabase;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean lo+cationPermissionsGranted;
+    private boolean locationPermissionsGranted;
 
     private Location lastKnownLocation;
     private List<LatLng> locations;
